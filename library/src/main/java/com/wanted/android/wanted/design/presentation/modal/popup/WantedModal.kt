@@ -126,6 +126,7 @@ fun WantedModal(
  *
  * @param onDismissRequest () -> Unit: 모달 외부 클릭 등으로 닫힐 때 호출되는 콜백입니다.
  * @param modifier Modifier: 컴포넌트에 적용할 Modifier입니다.
+ * @param size ModalSize: 모달의 크기입니다.
  * @param type ModalType: 모달의 형태입니다.
  * @param properties DialogProperties: Dialog 속성입니다.
  * @param shape RoundedCornerShape: 모달의 모서리 둥글기입니다.
@@ -137,6 +138,7 @@ fun WantedModal(
 fun WantedModal(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
+    size: ModalSize = ModalSize.Medium,
     type: ModalType = ModalType.Flexible,
     properties: DialogProperties = DialogProperties(),
     shape: RoundedCornerShape = RoundedCornerShape(12.dp),
@@ -150,11 +152,11 @@ fun WantedModal(
     ) {
         WantedDialogLayout(
             modifier = modifier.then(heightModifier(type, WantedModalContract.MAX_MODAL_SIZE.dp)),
-            modalSize = ModalSize.Medium,
+            modalSize = size,
             shape = shape,
             topBar = topBar,
             content = {
-                Box(modifier = Modifier.padding(horizontal = ModalSize.Medium.contentPadding)) {
+                Box(modifier = Modifier.padding(horizontal = size.contentPadding)) {
                     content()
                 }
             },
@@ -189,6 +191,7 @@ fun WantedModal(
  *
  * @param onDismissRequest () -> Unit: 모달 외부 클릭 등으로 닫힐 때 호출되는 콜백입니다.
  * @param modifier Modifier: 컴포넌트에 적용할 Modifier입니다.
+ * @param size ModalSize: 모달의 크기입니다.
  * @param type ModalType: 모달의 형태입니다.
  * @param properties DialogProperties: Dialog 속성입니다.
  * @param shape RoundedCornerShape: 모달의 모서리 둥글기입니다.
@@ -200,6 +203,7 @@ fun WantedModal(
 fun WantedModal(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
+    size: ModalSize = ModalSize.Medium,
     type: ModalType = ModalType.Flexible,
     properties: DialogProperties = DialogProperties(),
     shape: RoundedCornerShape = RoundedCornerShape(12.dp),
@@ -213,13 +217,13 @@ fun WantedModal(
     ) {
         WantedDialogLayout(
             modifier = modifier.then(heightModifier(type, WantedModalContract.MAX_MODAL_SIZE.dp)),
-            modalSize = ModalSize.Medium,
+            modalSize = size,
             shape = shape,
             topBar = topBar,
             content = {
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(ModalSize.Medium.contentPadding)
+                    contentPadding = PaddingValues(size.contentPadding)
                 ) {
                     lazyContent()
                 }

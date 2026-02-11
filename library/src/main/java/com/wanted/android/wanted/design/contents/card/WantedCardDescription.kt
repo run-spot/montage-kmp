@@ -38,12 +38,14 @@ internal fun WantedCardDescription(
     WantedCardDescriptionLayout(
         modifier = modifier,
         topContent = topContent,
-        title = {
-            Text(
-                text = title,
-                maxLines = maxLines,
-                overflow = TextOverflow.Ellipsis
-            )
+        title = title.ifEmpty { null }?.let {
+            {
+                Text(
+                    text = title,
+                    maxLines = maxLines,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         },
         caption = caption.ifEmpty { null }?.let {
             {
@@ -127,50 +129,57 @@ internal fun WantedCardDescriptionLayout(
     subCaption: @Composable (() -> Unit)? = null,
     extraCaption: @Composable (() -> Unit)? = null,
     bottomContent: @Composable (() -> Unit)? = null,
-    title: @Composable () -> Unit
+    title: @Composable (() -> Unit)? = null
 ) {
     Column(
         modifier = modifier.padding(horizontal = 2.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         topContent?.let {
             Spacer(Modifier.size(2.dp))
-            Box(modifier = Modifier.padding(bottom = 6.dp)) {
-                topContent()
-            }
+            topContent()
         }
 
-        ProvideTextStyle(
-            value = DesignSystemTheme.typography.body2Bold.copy(
-                color = DesignSystemTheme.colors.labelNormal
-            )
+        Column(
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            title()
-            Spacer(Modifier.size(4.dp))
-        }
-
-        ProvideTextStyle(
-            value = DesignSystemTheme.typography.label2Medium.copy(
-                color = DesignSystemTheme.colors.labelAlternative
-            )
-        ) {
-            caption?.invoke()
-
-            subCaption?.let {
-                Spacer(Modifier.size(2.dp))
-                subCaption()
+            title?.let {
+                ProvideTextStyle(
+                    value = DesignSystemTheme.typography.body2Bold.copy(
+                        color = DesignSystemTheme.colors.labelNormal
+                    )
+                ) {
+                    title()
+                }
             }
 
-            extraCaption?.let {
-                Spacer(Modifier.size(2.dp))
-                extraCaption()
+            Column(
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                ProvideTextStyle(
+                    value = DesignSystemTheme.typography.label2Medium.copy(
+                        color = DesignSystemTheme.colors.labelAlternative
+                    )
+                ) {
+                    caption?.invoke()
+
+                    subCaption?.let {
+                        subCaption()
+                    }
+
+                    extraCaption?.let {
+                        extraCaption()
+                    }
+                }
             }
         }
 
         bottomContent?.let {
-            Box(modifier = Modifier.padding(top = 8.dp)) {
+            Box(modifier = Modifier.padding(top = 2.dp)) {
                 bottomContent()
             }
         }
+
     }
 }
 

@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.wanted.android.designsystem.R
 import com.wanted.android.wanted.design.base.BorderType
@@ -60,6 +60,8 @@ import com.wanted.android.wanted.design.util.DevicePreviews
  * @param isGroup Boolean: 그룹 아바타 스타일을 적용할지 여부를 설정합니다.
  * @param pushBadge Boolean: 아바타에 푸시 알림 뱃지를 표시할지 여부를 설정합니다.
  * @param borderColor Color: 아바타 외곽선의 색상입니다. 기본값은 배경색입니다.
+ * @param alignment Alignment: 이미지의 정렬 방식입니다.
+ * @param contentScale ContentScale: 이미지의 크기 조정 방식입니다.
  * @param onClick (() -> Unit)?: 아바타 클릭 시 호출될 콜백 함수입니다.
  *
  * @see WantedAvatarType
@@ -77,6 +79,8 @@ fun WantedAvatar(
     isGroup: Boolean = false,
     pushBadge: Boolean = false,
     borderColor: Color = DesignSystemTheme.colors.backgroundNormalNormal,
+    alignment: Alignment = Alignment.Center,
+    contentScale: ContentScale = ContentScale.Fit,
     onClick: (() -> Unit)? = null
 ) {
     when (type) {
@@ -91,6 +95,8 @@ fun WantedAvatar(
                 isGroup = isGroup,
                 borderColor = borderColor,
                 pushBadge = pushBadge,
+                alignment = alignment,
+                contentScale = contentScale,
                 onClick = onClick
             )
         }
@@ -106,6 +112,8 @@ fun WantedAvatar(
                 isGroup = isGroup,
                 borderColor = borderColor,
                 pushBadge = pushBadge,
+                alignment = alignment,
+                contentScale = contentScale,
                 onClick = onClick
             )
         }
@@ -121,6 +129,8 @@ fun WantedAvatar(
                 isGroup = isGroup,
                 borderColor = borderColor,
                 pushBadge = pushBadge,
+                alignment = alignment,
+                contentScale = contentScale,
                 onClick = onClick
             )
         }
@@ -139,6 +149,8 @@ internal fun WantedAvatarPerson(
     isIcon: Boolean = false,
     borderColor: Color = DesignSystemTheme.colors.backgroundNormalNormal,
     pushBadge: Boolean = false,
+    alignment: Alignment = Alignment.Center,
+    contentScale: ContentScale = ContentScale.Fit,
     onClick: (() -> Unit)? = null
 ) {
     WantedAvatarLayout(
@@ -162,7 +174,9 @@ internal fun WantedAvatarPerson(
                     ),
                 model = model,
                 placeHolder = placeHolder,
-                isDrawableRes = isDrawableRes
+                isDrawableRes = isDrawableRes,
+                alignment = alignment,
+                contentScale = contentScale
             )
         },
         pushBadge = if (pushBadge) {
@@ -193,6 +207,8 @@ private fun WantedAvatar(
     isGroup: Boolean = false,
     borderColor: Color = DesignSystemTheme.colors.backgroundNormalNormal,
     pushBadge: Boolean,
+    alignment: Alignment = Alignment.Center,
+    contentScale: ContentScale = ContentScale.Fit,
     onClick: (() -> Unit)? = null
 ) {
     WantedAvatarLayout(
@@ -219,7 +235,9 @@ private fun WantedAvatar(
                     ),
                 model = model,
                 placeHolder = placeHolder,
-                isDrawableRes = isDrawableRes
+                isDrawableRes = isDrawableRes,
+                alignment = alignment,
+                contentScale = contentScale
             )
         },
         pushBadge = if (pushBadge) {

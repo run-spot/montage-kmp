@@ -16,11 +16,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -28,15 +26,16 @@ import com.wanted.android.designsystem.R
 import com.wanted.android.wanted.design.navigations.topbar.WantedTopAppBarContract.Variant
 import com.wanted.android.wanted.design.navigations.topbar.view.WantedCenterTopAppBarLayout
 import com.wanted.android.wanted.design.navigations.topbar.view.WantedDisplayTopAppBarLayout
-import com.wanted.android.wanted.design.navigations.topbar.view.WantedOverLayoutDivider
 import com.wanted.android.wanted.design.theme.DesignSystemTheme
 import com.wanted.android.wanted.design.util.DevicePreviews
+import com.wanted.android.wanted.design.util.OPACITY_88
 
 @Composable
 private fun WantedCenterTopAppBar(
     modifier: Modifier = Modifier,
     windowInsets: WindowInsets = WantedTopAppBarDefaults.windowInsets,
-    background: Color = DesignSystemTheme.colors.backgroundNormalNormal,
+    backgroundColor: Color = DesignSystemTheme.colors.backgroundNormalNormal,
+    background: Boolean = true,
     variant: Variant = Variant.Normal,
     scrollableState: ScrollableState? = null,
     title: String = "",
@@ -47,6 +46,7 @@ private fun WantedCenterTopAppBar(
     WantedCenterTopAppBar(
         modifier = modifier,
         windowInsets = windowInsets,
+        backgroundColor = backgroundColor,
         background = background,
         variant = variant,
         scrollableState = scrollableState,
@@ -66,7 +66,8 @@ private fun WantedCenterTopAppBar(
 private fun WantedCenterBackTopAppBar(
     modifier: Modifier = Modifier,
     windowInsets: WindowInsets = WantedTopAppBarDefaults.windowInsets,
-    background: Color = DesignSystemTheme.colors.backgroundElevatedNormal,
+    backgroundColor: Color = DesignSystemTheme.colors.backgroundElevatedNormal,
+    background: Boolean = true,
     variant: Variant = Variant.Normal,
     scrollableState: ScrollableState? = null,
     title: String = "",
@@ -76,6 +77,7 @@ private fun WantedCenterBackTopAppBar(
     WantedCenterTopAppBar(
         modifier = modifier,
         windowInsets = windowInsets,
+        backgroundColor = backgroundColor,
         background = background,
         variant = variant,
         scrollableState = scrollableState,
@@ -94,29 +96,42 @@ private fun WantedCenterBackTopAppBar(
 fun WantedCenterTopAppBar(
     modifier: Modifier = Modifier,
     windowInsets: WindowInsets = WantedTopAppBarDefaults.windowInsets,
-    background: Color = DesignSystemTheme.colors.backgroundNormalNormal,
+    backgroundColor: Color = DesignSystemTheme.colors.backgroundNormalNormal,
+    background: Boolean = true,
     variant: Variant = Variant.Normal,
     scrollableState: ScrollableState? = null,
     navigationIcon: @Composable (() -> Unit)? = null,
     title: @Composable (() -> Unit)? = null,
     actions: @Composable (RowScope.() -> Unit)? = null
 ) {
-    val isShowDivider = remember { mutableStateOf(false) }
+    val isScrollBackground = remember { mutableStateOf(false) }
     LaunchedEffect(key1 = scrollableState?.canScrollBackward) {
-        isShowDivider.value = scrollableState?.canScrollBackward == true
+        isScrollBackground.value = scrollableState?.canScrollBackward == true
     }
 
     Box(
-        modifier = if (variant == Variant.Floating) {
-            modifier
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(background, DesignSystemTheme.colors.transparent)
+        modifier = when {
+            variant == Variant.Floating && isScrollBackground.value
+                    || variant == Variant.Floating && background -> {
+                modifier
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(
+                                backgroundColor.copy(alpha = OPACITY_88),
+                                DesignSystemTheme.colors.transparent
+                            )
+                        )
                     )
-                )
-                .padding(bottom = 16.dp)
-        } else {
-            modifier.background(background)
+                    .padding(bottom = 16.dp)
+            }
+
+            !background && !isScrollBackground.value -> {
+                modifier.background(DesignSystemTheme.colors.transparent)
+            }
+
+            else -> {
+                modifier.background(backgroundColor)
+            }
         }
     ) {
         CompositionLocalProvider(LocalWantedTopBarIconVariant.provides(variant)) {
@@ -148,12 +163,6 @@ fun WantedCenterTopAppBar(
                     )
                 }
             }
-        }
-
-        if (isShowDivider.value) {
-            WantedOverLayoutDivider(
-                modifier = Modifier.align(Alignment.BottomCenter)
-            )
         }
     }
 }

@@ -22,6 +22,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.wanted.android.designsystem.R
@@ -73,8 +74,8 @@ import com.wanted.android.wanted.design.util.DevicePreviews
  * @param sectionTitleHorizontalPadding Dp: 섹션 제목의 좌우 여백입니다.
  * @param sectionCount Int: 자동완성 섹션 수입니다.
  * @param background Color: 배경 색상입니다.
+ * @param visualTransformation VisualTransformation: 텍스트 표시 방식을 변환합니다 (예: 비밀번호 마스킹).
  * @param interactionSource MutableInteractionSource: 포커스 등 상태 추적용입니다.
- * @param focused State<Boolean>: 포커스 상태입니다.
  * @param keyboardOptions KeyboardOptions: 키보드 동작 설정입니다.
  * @param keyboardActions KeyboardActions: 키보드 액션 처리입니다.
  * @param sectionTitle ((Int) -> String)?: 섹션 제목 반환 함수입니다.
@@ -112,6 +113,7 @@ fun WantedAutoCompleteTextField(
     sectionTitleHorizontalPadding: Dp = 20.dp,
     sectionCount: Int = 1,
     background: Color = colorResource(id = R.color.background_transparent_alternative),
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     focusRequester: FocusRequester = remember { FocusRequester() },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -156,6 +158,7 @@ fun WantedAutoCompleteTextField(
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActions,
                 background = background,
+                visualTransformation = visualTransformation,
                 rightButton = rightButton,
                 rightButtonVariant = rightButtonVariant,
                 placeholder = placeholder,
@@ -232,8 +235,8 @@ fun WantedAutoCompleteTextField(
  * @param sectionTitleHorizontalPadding Dp: 섹션 제목 여백입니다.
  * @param sectionCount Int: 섹션 수입니다.
  * @param background Color: 배경 색입니다.
+ * @param visualTransformation VisualTransformation: 텍스트 표시 방식을 변환합니다 (예: 비밀번호 마스킹).
  * @param interactionSource MutableInteractionSource: 포커스 상태 추적용입니다.
- * @param focused State<Boolean>: 포커스 여부입니다.
  * @param keyboardOptions KeyboardOptions: 키보드 동작 설정입니다.
  * @param keyboardActions KeyboardActions: 키보드 액션 처리입니다.
  * @param sectionTitle ((Int) -> String)?: 섹션 제목 제공 함수입니다.
@@ -270,6 +273,7 @@ fun WantedAutoCompleteTextField(
     sectionTitleHorizontalPadding: Dp = 20.dp,
     sectionCount: Int = 1,
     background: Color = colorResource(id = R.color.background_transparent_alternative),
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     focusRequester: FocusRequester = remember { FocusRequester() },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -313,6 +317,7 @@ fun WantedAutoCompleteTextField(
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActions,
                 background = background,
+                visualTransformation = visualTransformation,
                 rightButton = rightButton,
                 rightButtonVariant = rightButtonVariant,
                 placeholder = placeholder,

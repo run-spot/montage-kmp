@@ -27,43 +27,58 @@ internal fun WantedDialogLayout(
     bottomBar: (@Composable () -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
-    Column(
+    Box(
         modifier = modifier
             .clip(shape)
-            .background(backgroundColor),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(backgroundColor)
     ) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
+            topBar?.let {
+                // topBar 공간 확보
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = modalSize.titleVerticalPadding)
+                        .padding(horizontal = modalSize.titleHorizontalPadding)
+                )
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f, fill = false)
+            ) {
+                content()
+            }
+
+            bottomBar?.let {
+                // bottomBar
+                Box(
+                    modifier = Modifier
+                        .padding(modalSize.bottomBarPadding)
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    bottomBar()
+                }
+            }
+        }
+
+        // topBar를 overlay로 배치 (gradient가 content 위에 그려질 수 있도록)
         topBar?.let {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .align(Alignment.TopCenter)
                     .padding(vertical = modalSize.titleVerticalPadding)
                     .padding(horizontal = modalSize.titleHorizontalPadding)
             ) {
                 topBar()
-            }
-
-        }
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f, fill = false)
-        ) {
-            content()
-        }
-
-        bottomBar?.let {
-            // bottomBar
-            Box(
-                modifier = Modifier
-                    .padding(modalSize.bottomBarPadding)
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                contentAlignment = Alignment.Center
-            ) {
-                bottomBar()
             }
         }
     }
