@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -65,6 +66,8 @@ fun WantedAvatarGroup(
     @DrawableRes placeHolder: Int? = null,
     isIcon: Boolean = false,
     isDrawableRes: Boolean = false,
+    alignment: Alignment = Alignment.Center,
+    contentScale: ContentScale = ContentScale.Fit,
     trailingContent: @Composable ((Dp) -> Unit)? = null
 ) {
     Row(
@@ -87,6 +90,8 @@ fun WantedAvatarGroup(
                         type = type,
                         isGroup = true,
                         isIcon = isIcon,
+                        alignment = alignment,
+                        contentScale = contentScale,
                         isDrawableRes = isDrawableRes
                     )
                 }

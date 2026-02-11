@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.wanted.android.designsystem.R
@@ -68,6 +69,7 @@ import com.wanted.android.wanted.design.util.DevicePreviews
  * @param keyboardOptions KeyboardOptions: 키보드 동작 옵션입니다.
  * @param keyboardActions KeyboardActions: 키보드 액션에 대한 핸들링입니다.
  * @param background Color: 텍스트 필드 배경 색상입니다.
+ * @param visualTransformation VisualTransformation: 텍스트 표시 방식을 변환합니다 (예: 비밀번호 마스킹).
  * @param leadingIcon (() -> Unit)?: 좌측 아이콘 슬롯입니다.
  * @param trailingIcon (() -> Unit)?: 우측 아이콘 슬롯입니다.
  * @param trailingContent ((Dp) -> Unit)?: 우측 버튼 외 영역에 들어갈 커스텀 콘텐츠입니다.
@@ -96,6 +98,7 @@ fun WantedTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     background: Color = colorResource(id = R.color.background_transparent_alternative),
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     trailingContent: @Composable (() -> Unit)? = null,
@@ -142,6 +145,7 @@ fun WantedTextField(
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActions,
                 background = background,
+                visualTransformation = visualTransformation,
                 rightButton = rightButton,
                 rightButtonVariant = rightButtonVariant,
                 placeholder = placeholder,
@@ -220,6 +224,7 @@ fun WantedTextField(
  * @param keyboardOptions KeyboardOptions: 키보드 동작 설정입니다.
  * @param keyboardActions KeyboardActions: 키보드 액션 처리입니다.
  * @param background Color: 배경 색상입니다.
+ * @param visualTransformation VisualTransformation: 텍스트 표시 방식을 변환합니다 (예: 비밀번호 마스킹).
  */
 @Composable
 fun WantedTextField(
@@ -247,7 +252,8 @@ fun WantedTextField(
     focusRequester: FocusRequester = remember { FocusRequester() },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    background: Color = colorResource(id = R.color.background_transparent_alternative)
+    background: Color = colorResource(id = R.color.background_transparent_alternative),
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     WantedTextInputLayout(
         modifier = modifier,
@@ -277,6 +283,7 @@ fun WantedTextField(
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActions,
                 background = background,
+                visualTransformation = visualTransformation,
                 rightButton = rightButton,
                 rightButtonVariant = rightButtonVariant,
                 placeholder = placeholder,

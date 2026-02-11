@@ -163,7 +163,7 @@ fun WantedListCell(
     onClick: (() -> Unit)? = null,
 ) {
     WantedTouchArea(
-        shape = RoundedCornerShape(12.dp),
+        shape = if (fillWidth) RoundedCornerShape(12.dp) else RoundedCornerShape(0.dp),
         isUseRipple = isEnable && onClick != null,
         horizontalPadding = if (fillWidth) 0.dp else interactionPadding.padding,
         content = {

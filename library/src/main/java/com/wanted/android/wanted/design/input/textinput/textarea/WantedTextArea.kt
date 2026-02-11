@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -95,6 +96,7 @@ import java.text.BreakIterator
  * @param keyboardOptions KeyboardOptions: 키보드 설정입니다.
  * @param keyboardActions KeyboardActions: 키보드 액션 설정입니다.
  * @param background Color: 배경 색상입니다.
+ * @param visualTransformation VisualTransformation: 텍스트 표시 방식을 변환합니다 (예: 비밀번호 마스킹).
  * @param onClickRightButton () -> Unit: 우측 버튼 클릭 콜백입니다.
  * @param onValueChange (String) -> Unit: 값 변경 콜백입니다.
  */
@@ -121,6 +123,7 @@ fun WantedTextArea(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     background: Color = colorResource(id = R.color.background_transparent_alternative),
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     onClickRightButton: () -> Unit = {},
     onValueChange: (String) -> Unit = {}
 ) {
@@ -167,6 +170,7 @@ fun WantedTextArea(
                     rightButton = rightButton,
                     placeholder = placeholder,
                     background = background,
+                    visualTransformation = visualTransformation,
                     onClickRightButton = onClickRightButton,
                     onValueChange = { newTextFieldValueState ->
                         textFieldValueState = newTextFieldValueState
@@ -264,6 +268,7 @@ fun WantedTextArea(
  * @param keyboardOptions KeyboardOptions: 키보드 동작 설정입니다.
  * @param keyboardActions KeyboardActions: 키보드 액션 설정입니다.
  * @param background Color: 배경 색상입니다.
+ * @param visualTransformation VisualTransformation: 텍스트 표시 방식을 변환합니다 (예: 비밀번호 마스킹).
  */
 @Composable
 fun WantedTextArea(
@@ -286,6 +291,7 @@ fun WantedTextArea(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     background: Color = colorResource(id = R.color.background_transparent_alternative),
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     onClickRightButton: () -> Unit = {},
     onValueChange: (TextFieldValue) -> Unit = {}
 ) {
@@ -319,6 +325,7 @@ fun WantedTextArea(
                 rightButton = rightButton,
                 placeholder = placeholder,
                 background = background,
+                visualTransformation = visualTransformation,
                 onClickRightButton = onClickRightButton,
                 onValueChange = onValueChange
             )
@@ -360,6 +367,7 @@ fun WantedTextArea(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     background: Color = colorResource(id = R.color.background_transparent_alternative),
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     leftContent: (@Composable (() -> Unit))? = null,
     rightContent: (@Composable (() -> Unit))? = null,
     onValueChange: (TextFieldValue) -> Unit = {}
@@ -386,6 +394,7 @@ fun WantedTextArea(
                 minLines = minLines,
                 maxWordCount = maxWordCount,
                 enabledOverflowText = enabledOverflowText,
+                visualTransformation = visualTransformation,
                 interactionSource = interactionSource,
                 focusRequester = focusRequester,
                 keyboardOptions = keyboardOptions,
@@ -495,6 +504,7 @@ private fun WantedTextAreaContent(
     enabledOverflowText: Boolean = false,
     isGraphemeClusterCount: Boolean = false, // 커서 숫자로 판단 - 이모지 때문
     cursorBrush: Brush = SolidColor(DesignSystemTheme.colors.primaryNormal),
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     focused: State<Boolean> = interactionSource.collectIsFocusedAsState(),
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -569,6 +579,7 @@ private fun WantedTextAreaContent(
                     maxLines = maxLines,
                     minLines = minLines,
                     enabled = enabled,
+                    visualTransformation = visualTransformation,
                     interactionSource = interactionSource,
                     keyboardOptions = keyboardOptions,
                     keyboardActions = keyboardActions,
