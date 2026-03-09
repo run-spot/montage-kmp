@@ -40,11 +40,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import com.wanted.android.designsystem.R
 import com.wanted.android.wanted.design.actions.button.WantedButton
 import com.wanted.android.wanted.design.actions.chip.WantedChip
-import com.wanted.android.wanted.design.base.WantedDropShadow
+import com.wanted.android.wanted.design.base.WantedDropShadowDefaults
+import com.wanted.android.wanted.design.base.wantedDropShadow
 import com.wanted.android.wanted.design.input.textinput.view.ComponentTitle
 import com.wanted.android.wanted.design.input.textinput.view.WantedTextAreaCharacterCount
 import com.wanted.android.wanted.design.input.textinput.view.WantedTextAreaLayout
@@ -92,7 +92,6 @@ import java.text.BreakIterator
  * @param isGraphemeClusterCount Boolean: 문자 수 대신 grapheme cluster 기준으로 글자 수를 셉니다.
  * @param requiredBadge Boolean: 필수 입력 뱃지 표시 여부입니다.
  * @param interactionSource MutableInteractionSource: 포커스 등 인터랙션 추적용입니다.
- * @param focused State<Boolean>: 포커스 상태입니다.
  * @param keyboardOptions KeyboardOptions: 키보드 설정입니다.
  * @param keyboardActions KeyboardActions: 키보드 액션 설정입니다.
  * @param background Color: 배경 색상입니다.
@@ -264,7 +263,6 @@ fun WantedTextArea(
  * @param requiredBadge Boolean: 필수 입력 여부입니다.
  * @param isGraphemeClusterCount Boolean: grapheme cluster 기준 글자 수 사용 여부입니다.
  * @param interactionSource MutableInteractionSource: 포커스 등 인터랙션 추적용입니다.
- * @param focused State<Boolean>: 포커스 상태입니다.
  * @param keyboardOptions KeyboardOptions: 키보드 동작 설정입니다.
  * @param keyboardActions KeyboardActions: 키보드 액션 설정입니다.
  * @param background Color: 배경 색상입니다.
@@ -517,29 +515,10 @@ private fun WantedTextAreaContent(
     onValueChange: (TextFieldValue) -> Unit
 ) {
     ConstraintLayout(modifier = modifier) {
-        val (shadow, textField) = createRefs()
-        WantedDropShadow(
-            Modifier
-                .constrainAs(shadow) {
-                    top.linkTo(textField.top)
-                    bottom.linkTo(textField.bottom)
-                    start.linkTo(textField.start)
-                    end.linkTo(textField.end)
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                },
-            background = background,
-            shape = RoundedCornerShape(12.dp)
-        )
 
         WantedTextAreaLayout(
             modifier = Modifier
-                .constrainAs(textField) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
+                .wantedDropShadow(WantedDropShadowDefaults.WantedShadowStyle.XSmall())
                 .clip(RoundedCornerShape(12.dp))
                 .border(
                     shape = RoundedCornerShape(12.dp),
