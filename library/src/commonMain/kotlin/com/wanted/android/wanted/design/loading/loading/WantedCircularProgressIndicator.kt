@@ -1,6 +1,5 @@
 package com.wanted.android.wanted.design.loading.loading
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.size
@@ -30,7 +29,6 @@ import com.wanted.android.wanted.design.theme.DesignSystemTheme
  * @param modifier Modifier: 컴포넌트에 적용할 Modifier입니다.
  * @param color Color: 인디케이터 색상입니다.
  */
-@SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun WantedCircularProgressIndicator(
     modifier: Modifier = Modifier,

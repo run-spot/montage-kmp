@@ -15,7 +15,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import com.wanted.android.wanted.design.theme.DesignSystemTheme
-import java.util.regex.Pattern
 
 @Composable
 fun CustomLinkifyText(
@@ -81,22 +80,20 @@ fun CustomLinkifyText(
 }
 
 private fun extractUrls(text: String): List<LinkInfos> {
-    val matcher = urlPattern.matcher(text)
-    var matchStart: Int
-    var matchEnd: Int
-    val links = arrayListOf<LinkInfos>()
-
-    while (matcher.find()) {
-        matchStart = matcher.start(1)
-        matchEnd = matcher.end()
-
-        var url = text.substring(matchStart, matchEnd)
+    return urlPattern.findAll(text).map { match ->
+        val urlText = match.groups[1]?.value ?: match.value
+        val start = match.range.first + match.value.indexOf(urlText)
+        val end = start + urlText.length
+        var url = urlText
         if (!url.startsWith("http://") && !url.startsWith("https://"))
             url = "https://$url"
 
-        links.add(LinkInfos(url, matchStart, matchEnd))
-    }
-    return links
+        LinkInfos(
+            url = url,
+            start = start,
+            end = end
+        )
+    }.toList()
 }
 
 private data class LinkInfos(
@@ -106,9 +103,9 @@ private data class LinkInfos(
 )
 
 private const val URL = "URL"
-private val urlPattern: Pattern = Pattern.compile(
+private val urlPattern = Regex(
     "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)"
             + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
             + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
-    Pattern.CASE_INSENSITIVE or Pattern.MULTILINE or Pattern.DOTALL
+    setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE)
 )

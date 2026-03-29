@@ -212,3 +212,7 @@ internal fun rememberWantedPopoverStateHolder(
     WantedPopoverStateHolderImpl(initialVisible)
 }
 
+@Composable
+fun rememberPopoverState(initialVisible: Boolean = false): WantedSimplePopoverState {
+    return WantedSimplePopoverStateImpl(rememberWantedPopoverStateHolder(initialVisible))
+}
