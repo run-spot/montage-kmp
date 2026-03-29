@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "montage-android"
+rootProject.name = "montage-kmp"
 include(":library")

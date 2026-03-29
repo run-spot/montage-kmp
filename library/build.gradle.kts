@@ -1,10 +1,69 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
 plugins {
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.plugin.compose)
+    alias(libs.plugins.compose.multiplatform)
     id("maven-publish")
+}
+
+kotlin {
+    androidTarget {
+        publishLibraryVariants("release")
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+            freeCompilerArgs.addAll(
+                listOf(
+                    "-opt-in=kotlin.ExperimentalUnsignedTypes",
+                    "-opt-in=kotlinx.coroutines.FlowPreview",
+                    "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                    "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
+                    "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+                    "-opt-in=androidx.compose.runtime.ExperimentalComposeApi",
+                    "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                    "-opt-in=com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi",
+                    "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                    "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
+                    "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+                )
+            )
+        }
+    }
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.ui)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
+
+        androidMain.dependencies {
+            implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+            implementation(kotlin("stdlib"))
+
+            implementation(libs.androidx.appcompat)
+            implementation(libs.androidx.core)
+            implementation(libs.androidx.vectordrawable)
+            implementation(libs.androidx.constraintlayout)
+            implementation(libs.androidx.constraintlayout.compose)
+            implementation(libs.google.material)
+
+            implementation(libs.lottie.compose)
+            implementation(libs.glide.compose)
+        }
+    }
 }
 
 android {
@@ -40,24 +99,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-        freeCompilerArgs = freeCompilerArgs + listOf(
-            "-opt-in=kotlin.ExperimentalUnsignedTypes",
-            "-opt-in=kotlinx.coroutines.FlowPreview",
-            "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-            "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
-            "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-            "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
-            "-opt-in=androidx.compose.runtime.ExperimentalComposeApi",
-            "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-            "-opt-in=com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi",
-            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-            "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
-            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
-        )
-    }
-
     buildFeatures {
         compose = true
         viewBinding = true
@@ -77,50 +118,35 @@ android {
         abortOnError = false
         checkReleaseBuilds = false
         ignoreWarnings = true
-        // Disable problematic checks that fail with Kotlin 2.0
         disable += setOf(
             "ObsoleteLintCustomCheck",
             "LintError"
         )
-        // Workaround for Kotlin 2.0 FIR compiler compatibility
         warningsAsErrors = false
     }
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation(kotlin("stdlib"))
-
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core)
-    implementation(libs.androidx.vectordrawable)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.constraintlayout.compose)
-    implementation(libs.google.material)
-
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.material.icons.extended)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-
-    implementation(libs.lottie.compose)
-    implementation(libs.glide.compose)
-
+    add("androidMainImplementation", platform(libs.androidx.compose.bom))
+    add("androidMainImplementation", libs.androidx.compose.ui)
+    add("androidMainImplementation", libs.androidx.compose.material)
+    add("androidMainImplementation", libs.androidx.compose.material3)
+    add("androidMainImplementation", libs.androidx.compose.material.icons.extended)
+    add("androidMainImplementation", libs.androidx.compose.ui.tooling.preview)
     debugImplementation(libs.androidx.compose.ui.tooling)
 }
 
-
-val publishProperties = Properties().apply {
-    file("publish.properties").inputStream().use { fis -> load(fis) }
+val publishPropertiesFile = file("publish.properties")
+val publishProperties = Properties()
+if (publishPropertiesFile.exists()) {
+    publishPropertiesFile.inputStream().use { fis -> publishProperties.load(fis) }
 }
 
-val libGroupId = publishProperties.getProperty("groupId")
-val libArtifactId = publishProperties.getProperty("artifactId")
-val libVersion = publishProperties.getProperty("version")
+group = publishProperties.getProperty("groupId") ?: "com.wanted.android"
+version = publishProperties.getProperty("version") ?: "0.1.0-SNAPSHOT"
 
-// Build AAR task
+val libArtifactId = publishProperties.getProperty("artifactId") ?: "montage-kmp"
+
 val buildAar by tasks.registering {
     group = "build"
     description = "Builds the release AAR file"
@@ -129,17 +155,16 @@ val buildAar by tasks.registering {
     doLast {
         val aarFile = file("build/outputs/aar/library-release.aar")
         if (aarFile.exists()) {
-            println("✅ AAR built successfully:")
-            println("   Location: ${aarFile.absolutePath}")
-            println("   Size: ${aarFile.length() / 1024} KB")
+            println("AAR built successfully:")
+            println("Location: ${aarFile.absolutePath}")
+            println("Size: ${aarFile.length() / 1024} KB")
         } else {
-            println("❌ AAR file not found")
+            println("AAR file not found")
         }
     }
 }
 
 afterEvaluate {
-    // Disable lint analysis tasks to avoid Kotlin 2.0 FIR compatibility issues
     tasks.matching {
         it.name.contains("lint", ignoreCase = true)
     }.configureEach {
@@ -147,39 +172,36 @@ afterEvaluate {
     }
 
     publishing {
-        publications {
-            create<MavenPublication>("release") {
-                from(components["release"])
+        publications.withType<MavenPublication>().configureEach {
+            artifactId = when (name) {
+                "kotlinMultiplatform" -> libArtifactId
+                "androidRelease" -> "${libArtifactId}-android"
+                else -> artifactId
+            }
 
-                groupId = libGroupId
-                artifactId = libArtifactId
-                version = libVersion
+            pom {
+                name.set("Montage KMP Design System")
+                description.set("Montage design system library prepared for Kotlin Multiplatform migration")
+                url.set("https://github.com/run-spot/montage-kmp")
 
-                pom {
-                    name.set("Montage Android Design System")
-                    description.set("Montage Android Design System Library")
-                    url.set("https://github.com/wanteddev/montage-android")
-
-                    licenses {
-                        license {
-                            name.set("MIT License")
-                            url.set("https://opensource.org/licenses/MIT")
-                        }
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/MIT")
                     }
+                }
 
-                    developers {
-                        developer {
-                            id.set("wanteddev")
-                            name.set("Wanted")
-//                            email.set("dev@wantedlab.com")
-                        }
+                developers {
+                    developer {
+                        id.set("wanteddev")
+                        name.set("Wanted")
                     }
+                }
 
-                    scm {
-                        connection.set("scm:git:git://github.com/wanteddev/montage-android.git")
-                        developerConnection.set("scm:git:ssh://github.com/wanteddev/montage-android.git")
-                        url.set("https://github.com/wanteddev/montage-android")
-                    }
+                scm {
+                    connection.set("scm:git:git://github.com/run-spot/montage-kmp.git")
+                    developerConnection.set("scm:git:ssh://github.com/run-spot/montage-kmp.git")
+                    url.set("https://github.com/run-spot/montage-kmp")
                 }
             }
         }
@@ -187,7 +209,7 @@ afterEvaluate {
         repositories {
             maven {
                 name = "GithubPackages"
-                url = uri("https://maven.pkg.github.com/wanteddev/montage-android")
+                url = uri("https://maven.pkg.github.com/run-spot/montage-kmp")
                 credentials {
                     username = System.getenv("GITHUB_ACTOR")
                     password = System.getenv("GITHUB_TOKEN")

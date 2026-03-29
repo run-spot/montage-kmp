@@ -12,6 +12,8 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
+import kotlin.time.TimeMark
+import kotlin.time.TimeSource
 
 internal fun Modifier.clickOnce(
     enabled: Boolean = true,
@@ -58,18 +60,14 @@ internal fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = compose
 }
 
 internal object ComposeMultipleEventCutter {
-    private val now: Long
-        get() = System.currentTimeMillis()
-
-    private var lastEventTimeMs: Long = 0
+    private var lastEventTime: TimeMark? = null
 
     fun processEvent(time: Long, event: () -> Unit) {
-        if (now - lastEventTimeMs >= time) {
+        val lastEvent = lastEventTime
+        if (lastEvent == null || lastEvent.elapsedNow().inWholeMilliseconds >= time) {
             event.invoke()
         }
-
-        lastEventTimeMs = now
+        lastEventTime = TimeSource.Monotonic.markNow()
     }
 }
-
 
