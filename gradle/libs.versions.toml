@@ -2,6 +2,7 @@
 androidGradlePlugin = "8.13.0"
 kotlin = "2.0.21"
 kotlin-compose-plugin = "2.0.0"
+composeMultiplatform = "1.7.1"
 
 appcompat = "1.7.1"
 core = "1.15.0"
@@ -15,6 +16,7 @@ lottie = "6.6.0"
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "core" }
 androidx-vectordrawable = { module = "androidx.vectordrawable:vectordrawable-animated", version.ref = "vectordrawable" }
@@ -32,8 +34,14 @@ androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling
 
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 glide-compose = { module = "com.github.bumptech.glide:compose", version.ref = "glideCompose" }
+compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
+compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
+compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "composeMultiplatform" }
+compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-compose-plugin" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
