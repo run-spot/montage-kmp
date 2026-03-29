@@ -1,8 +1,8 @@
 [versions]
-androidGradlePlugin = "8.13.0"
-kotlin = "2.0.21"
-kotlin-compose-plugin = "2.0.0"
-composeMultiplatform = "1.7.1"
+androidGradlePlugin = "8.11.1"
+kotlin = "2.2.20"
+kotlin-compose-plugin = "2.2.20"
+composeMultiplatform = "1.10.0"
 
 appcompat = "1.7.1"
 core = "1.15.0"
@@ -24,7 +24,7 @@ androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayo
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintLayoutCompose" }
 google-material = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
 
-androidx-compose-bom = "androidx.compose:compose-bom:2025.03.00"
+androidx-compose-bom = "androidx.compose:compose-bom:2026.02.01"
 androidx-compose-ui = { module = "androidx.compose.ui:ui" }
 androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }

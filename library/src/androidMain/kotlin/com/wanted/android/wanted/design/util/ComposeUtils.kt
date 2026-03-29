@@ -32,48 +32,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import com.wanted.android.wanted.design.theme.DesignSystemTheme
-import com.wanted.android.wanted.design.theme.pretendardBold
-
-@Composable
-fun FontFixTextStyle(
-    color: Color = Color.Unspecified,
-    fontSize: TextUnit = TextUnit.Unspecified,
-    fontWeight: FontWeight? = null,
-    fontStyle: FontStyle? = null,
-    fontSynthesis: FontSynthesis? = null,
-    fontFeatureSettings: String? = null,
-    letterSpacing: TextUnit = TextUnit.Unspecified,
-    baselineShift: BaselineShift? = null,
-    textGeometricTransform: TextGeometricTransform? = null,
-    localeList: LocaleList? = null,
-    background: Color = Color.Unspecified,
-    textDecoration: TextDecoration? = null,
-    shadow: Shadow? = null,
-    textAlign: TextAlign = TextAlign.Unspecified,
-    textDirection: TextDirection = TextDirection.Unspecified,
-    lineHeight: TextUnit = TextUnit.Unspecified,
-    textIndent: TextIndent? = null,
-) = TextStyle(
-    color = color,
-    fontSize = fontSize,
-    fontWeight = fontWeight,
-    fontStyle = fontStyle,
-    fontSynthesis = fontSynthesis,
-    fontFamily = pretendardBold,
-    fontFeatureSettings = fontFeatureSettings,
-    letterSpacing = letterSpacing,
-    baselineShift = baselineShift,
-    textGeometricTransform = textGeometricTransform,
-    localeList = localeList,
-    background = background,
-    textDecoration = textDecoration,
-    shadow = shadow,
-    textAlign = textAlign,
-    textDirection = textDirection,
-    lineHeight = lineHeight,
-    textIndent = textIndent,
-)
-
 @Composable
 fun WantedTextStyle(colorRes: Int, style: TextStyle, alpha: Float? = null) = style.merge(
     TextStyle(
