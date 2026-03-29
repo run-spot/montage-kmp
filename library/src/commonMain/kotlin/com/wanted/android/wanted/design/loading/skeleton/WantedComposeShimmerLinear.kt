@@ -12,15 +12,21 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
-import androidx.compose.ui.res.colorResource
-import com.wanted.android.designsystem.R
+import com.wanted.android.wanted.design.theme.DesignSystemTheme
 import com.wanted.android.wanted.design.util.OPACITY_16
 
 fun Modifier.shimmerLinear(
-    colorRes: Int = R.color.fill_alternative,
+    color: Color = Color.Unspecified,
     alpha: Float = OPACITY_16,
 ): Modifier = composed {
+    val shimmerColor = if (color == Color.Unspecified) {
+        DesignSystemTheme.colors.fillAlternative
+    } else {
+        color
+    }
+
     val transition = rememberInfiniteTransition(label = "")
     val translateAnimation by transition.animateFloat(
         initialValue = 0f,
@@ -32,8 +38,8 @@ fun Modifier.shimmerLinear(
         label = "",
     )
     val shimmerColors = listOf(
-        colorResource(id = colorRes),
-        colorResource(id = colorRes).copy(alpha = alpha),
+        shimmerColor,
+        shimmerColor.copy(alpha = alpha),
     )
     drawWithContent {
         drawContent()
