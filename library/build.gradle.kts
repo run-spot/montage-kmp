@@ -29,7 +29,6 @@ kotlin {
                     "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
                     "-opt-in=androidx.compose.runtime.ExperimentalComposeApi",
                     "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-                    "-opt-in=com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi",
                     "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
                     "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
                     "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
@@ -45,11 +44,14 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(libs.compose.components.resources)
-        }
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(libs.compose.components.resources)
+                implementation(libs.compottie)
+                implementation(libs.coil.compose)
+                implementation(libs.coil.network.ktor3)
+            }
 
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -66,8 +68,25 @@ kotlin {
             implementation(libs.androidx.constraintlayout.compose)
             implementation(libs.google.material)
 
-            implementation(libs.lottie.compose)
-            implementation(libs.glide.compose)
+            implementation(libs.ktor.client.android)
+        }
+
+        val iosX64Main by getting {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
+        }
+
+        val iosArm64Main by getting {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
+        }
+
+        val iosSimulatorArm64Main by getting {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
         }
     }
 }

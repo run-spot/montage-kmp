@@ -1,6 +1,5 @@
 package com.wanted.android.wanted.design.contents.avatar
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -18,15 +17,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.wanted.android.designsystem.R
 import com.wanted.android.wanted.design.base.BorderType
 import com.wanted.android.wanted.design.base.WantedTouchArea
 import com.wanted.android.wanted.design.base.getBorderModifier
 import com.wanted.android.wanted.design.contents.avatar.WantedAvatarDefaults.WantedAvatarSize
 import com.wanted.android.wanted.design.contents.avatar.WantedAvatarDefaults.WantedAvatarType
 import com.wanted.android.wanted.design.feedback.pushbadge.WantedPushBadge
+import com.wanted.android.wanted.design.resources.Res
+import com.wanted.android.wanted.design.resources.icon_avatar_placeholder_academic
+import com.wanted.android.wanted.design.resources.icon_avatar_placeholder_company
+import com.wanted.android.wanted.design.resources.icon_avatar_placeholder_person
 import com.wanted.android.wanted.design.theme.DesignSystemTheme
 import com.wanted.android.wanted.design.util.DevicePreviews
+import org.jetbrains.compose.resources.DrawableResource
 
 /**
  * WantedAvatar
@@ -71,7 +74,7 @@ fun WantedAvatar(
     modifier: Modifier = Modifier,
     size: WantedAvatarSize = WantedAvatarSize.Small,
     model: Any? = null,
-    @DrawableRes placeHolder: Int? = null,
+    placeHolder: DrawableResource? = null,
     isDrawableRes: Boolean = false,
     isGroup: Boolean = false,
     pushBadge: Boolean = false,
@@ -85,7 +88,7 @@ fun WantedAvatar(
             WantedAvatarPerson(
                 modifier = modifier,
                 model = model,
-                placeHolder = placeHolder ?: R.drawable.icon_avatar_placeholder_person,
+                placeHolder = placeHolder ?: Res.drawable.icon_avatar_placeholder_person,
                 size = size,
                 isDrawableRes = isDrawableRes,
                 isGroup = isGroup,
@@ -101,7 +104,7 @@ fun WantedAvatar(
             WantedAvatar(
                 modifier = modifier,
                 model = model,
-                placeHolder = placeHolder ?: R.drawable.icon_avatar_placeholder_company,
+                placeHolder = placeHolder ?: Res.drawable.icon_avatar_placeholder_company,
                 size = size,
                 isDrawableRes = isDrawableRes,
                 isGroup = isGroup,
@@ -117,7 +120,7 @@ fun WantedAvatar(
             WantedAvatar(
                 modifier = modifier,
                 model = model,
-                placeHolder = placeHolder ?: R.drawable.icon_avatar_placeholder_academic,
+                placeHolder = placeHolder ?: Res.drawable.icon_avatar_placeholder_academic,
                 size = size,
                 isDrawableRes = isDrawableRes,
                 isGroup = isGroup,
@@ -136,7 +139,7 @@ fun WantedAvatar(
 internal fun WantedAvatarPerson(
     modifier: Modifier,
     model: Any?,
-    @DrawableRes placeHolder: Int? = null,
+    placeHolder: DrawableResource? = null,
     size: WantedAvatarSize,
     isDrawableRes: Boolean = false,
     isGroup: Boolean = false,
@@ -185,7 +188,7 @@ internal fun WantedAvatarPerson(
 private fun WantedAvatar(
     modifier: Modifier = Modifier,
     model: Any?,
-    @DrawableRes placeHolder: Int? = null,
+    placeHolder: DrawableResource? = null,
     size: WantedAvatarSize,
     isDrawableRes: Boolean = false,
     isGroup: Boolean = false,
@@ -300,7 +303,7 @@ private fun WantedAvatarPreview() {
                 WantedAvatar(
                     modifier = Modifier,
                     model = null,
-                    placeHolder = R.drawable.icon_avatar_placeholder_person,
+                    placeHolder = Res.drawable.icon_avatar_placeholder_person,
                     size = WantedAvatarSize.XLarge,
                     type = WantedAvatarType.Person,
                     isDrawableRes = true,
@@ -309,8 +312,8 @@ private fun WantedAvatarPreview() {
                 )
                 WantedAvatar(
                     modifier = Modifier,
-                    model = R.drawable.icon_avatar_placeholder_person,
-                    placeHolder = R.drawable.icon_avatar_placeholder_person,
+                    model = Res.drawable.icon_avatar_placeholder_person,
+                    placeHolder = Res.drawable.icon_avatar_placeholder_person,
                     size = WantedAvatarSize.XLarge,
                     type = WantedAvatarType.Person,
                     isDrawableRes = true,

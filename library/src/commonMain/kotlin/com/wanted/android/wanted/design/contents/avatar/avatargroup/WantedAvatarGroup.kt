@@ -1,7 +1,5 @@
 package com.wanted.android.wanted.design.contents.avatar.avatargroup
 
-import android.annotation.SuppressLint
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -18,12 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.wanted.android.designsystem.R
 import com.wanted.android.wanted.design.contents.avatar.WantedAvatar
 import com.wanted.android.wanted.design.contents.avatar.WantedAvatarDefaults.WantedAvatarSize
 import com.wanted.android.wanted.design.contents.avatar.WantedAvatarDefaults.WantedAvatarType
+import com.wanted.android.wanted.design.resources.Res
+import com.wanted.android.wanted.design.resources.icon_avatar_placeholder_academic
+import com.wanted.android.wanted.design.resources.icon_avatar_placeholder_company
+import com.wanted.android.wanted.design.resources.icon_avatar_placeholder_person
 import com.wanted.android.wanted.design.theme.DesignSystemTheme
 import com.wanted.android.wanted.design.util.DevicePreviews
+import org.jetbrains.compose.resources.DrawableResource
 
 /**
  * WantedAvatarGroup
@@ -53,14 +55,13 @@ import com.wanted.android.wanted.design.util.DevicePreviews
  * @param isDrawableRes Boolean: modelList 항목이 Drawable 리소스인지 여부입니다.
  * @param trailingContent (@Composable (Dp) -> Unit)?: 아바타 그룹 오른쪽에 추가적으로 표시할 콘텐츠입니다.
  */
-@SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun WantedAvatarGroup(
     modelList: List<Any>,
     size: WantedAvatarSize,
     type: WantedAvatarType,
     modifier: Modifier = Modifier,
-    @DrawableRes placeHolder: Int? = null,
+    placeHolder: DrawableResource? = null,
     isDrawableRes: Boolean = false,
     alignment: Alignment = Alignment.Center,
     contentScale: ContentScale = ContentScale.Fit,
@@ -125,11 +126,11 @@ private fun WantedAvatarPreview() {
                 WantedAvatarGroup(
                     modifier = Modifier,
                     modelList = listOf(
-                        R.drawable.icon_avatar_placeholder_person,
-                        R.drawable.icon_avatar_placeholder_person,
-                        R.drawable.icon_avatar_placeholder_person
+                        Res.drawable.icon_avatar_placeholder_person,
+                        Res.drawable.icon_avatar_placeholder_person,
+                        Res.drawable.icon_avatar_placeholder_person
                     ),
-                    placeHolder = R.drawable.icon_avatar_placeholder_person,
+                    placeHolder = Res.drawable.icon_avatar_placeholder_person,
                     size = WantedAvatarSize.XLarge,
                     type = WantedAvatarType.Person,
                     isDrawableRes = true,
@@ -138,11 +139,11 @@ private fun WantedAvatarPreview() {
                 WantedAvatarGroup(
                     modifier = Modifier,
                     modelList = listOf(
-                        R.drawable.icon_avatar_placeholder_person,
-                        R.drawable.icon_avatar_placeholder_person,
-                        R.drawable.icon_avatar_placeholder_person
+                        Res.drawable.icon_avatar_placeholder_person,
+                        Res.drawable.icon_avatar_placeholder_person,
+                        Res.drawable.icon_avatar_placeholder_person
                     ),
-                    placeHolder = R.drawable.icon_avatar_placeholder_person,
+                    placeHolder = Res.drawable.icon_avatar_placeholder_person,
                     size = WantedAvatarSize.XLarge,
                     type = WantedAvatarType.Person,
                     isDrawableRes = true,
@@ -151,11 +152,11 @@ private fun WantedAvatarPreview() {
                 WantedAvatarGroup(
                     modifier = Modifier,
                     modelList = listOf(
-                        R.drawable.icon_avatar_placeholder_company,
-                        R.drawable.icon_avatar_placeholder_company,
-                        R.drawable.icon_avatar_placeholder_company
+                        Res.drawable.icon_avatar_placeholder_company,
+                        Res.drawable.icon_avatar_placeholder_company,
+                        Res.drawable.icon_avatar_placeholder_company
                     ),
-                    placeHolder = R.drawable.icon_avatar_placeholder_company,
+                    placeHolder = Res.drawable.icon_avatar_placeholder_company,
                     size = WantedAvatarSize.XLarge,
                     type = WantedAvatarType.Company,
                     isDrawableRes = true,
@@ -164,11 +165,11 @@ private fun WantedAvatarPreview() {
                 WantedAvatarGroup(
                     modifier = Modifier,
                     modelList = listOf(
-                        R.drawable.icon_avatar_placeholder_company,
-                        R.drawable.icon_avatar_placeholder_company,
-                        R.drawable.icon_avatar_placeholder_company
+                        Res.drawable.icon_avatar_placeholder_company,
+                        Res.drawable.icon_avatar_placeholder_company,
+                        Res.drawable.icon_avatar_placeholder_company
                     ),
-                    placeHolder = R.drawable.icon_avatar_placeholder_company,
+                    placeHolder = Res.drawable.icon_avatar_placeholder_company,
                     size = WantedAvatarSize.XLarge,
                     type = WantedAvatarType.Company,
                     isDrawableRes = true,
@@ -177,11 +178,11 @@ private fun WantedAvatarPreview() {
                 WantedAvatarGroup(
                     modifier = Modifier,
                     modelList = listOf(
-                        R.drawable.icon_avatar_placeholder_academic,
-                        R.drawable.icon_avatar_placeholder_academic,
-                        R.drawable.icon_avatar_placeholder_academic
+                        Res.drawable.icon_avatar_placeholder_academic,
+                        Res.drawable.icon_avatar_placeholder_academic,
+                        Res.drawable.icon_avatar_placeholder_academic
                     ),
-                    placeHolder = R.drawable.icon_avatar_placeholder_academic,
+                    placeHolder = Res.drawable.icon_avatar_placeholder_academic,
                     size = WantedAvatarSize.XLarge,
                     type = WantedAvatarType.Academic,
                     isDrawableRes = true,
@@ -190,11 +191,11 @@ private fun WantedAvatarPreview() {
                 WantedAvatarGroup(
                     modifier = Modifier,
                     modelList = listOf(
-                        R.drawable.icon_avatar_placeholder_academic,
-                        R.drawable.icon_avatar_placeholder_academic,
-                        R.drawable.icon_avatar_placeholder_academic
+                        Res.drawable.icon_avatar_placeholder_academic,
+                        Res.drawable.icon_avatar_placeholder_academic,
+                        Res.drawable.icon_avatar_placeholder_academic
                     ),
-                    placeHolder = R.drawable.icon_avatar_placeholder_academic,
+                    placeHolder = Res.drawable.icon_avatar_placeholder_academic,
                     size = WantedAvatarSize.XLarge,
                     type = WantedAvatarType.Academic,
                     isDrawableRes = true,
@@ -204,11 +205,11 @@ private fun WantedAvatarPreview() {
                 WantedAvatarGroup(
                     modifier = Modifier,
                     modelList = listOf(
-                        R.drawable.icon_avatar_placeholder_person,
-                        R.drawable.icon_avatar_placeholder_person,
-                        R.drawable.icon_avatar_placeholder_person
+                        Res.drawable.icon_avatar_placeholder_person,
+                        Res.drawable.icon_avatar_placeholder_person,
+                        Res.drawable.icon_avatar_placeholder_person
                     ),
-                    placeHolder = R.drawable.icon_avatar_placeholder_person,
+                    placeHolder = Res.drawable.icon_avatar_placeholder_person,
                     size = WantedAvatarSize.XLarge,
                     type = WantedAvatarType.Person,
                     isDrawableRes = true,

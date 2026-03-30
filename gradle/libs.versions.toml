@@ -11,8 +11,9 @@ constraintLayoutCompose = "1.1.1"
 vectordrawable = "1.2.0"
 googleMaterial = "1.12.0"
 
-glideCompose = "1.0.0-beta01"
-lottie = "6.6.0"
+coil3 = "3.3.0"
+ktor = "3.3.3"
+compottie = "2.0.2"
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
@@ -32,8 +33,11 @@ androidx-compose-material-icons-extended = { module = "androidx.compose.material
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 
-lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
-glide-compose = { module = "com.github.bumptech.glide:compose", version.ref = "glideCompose" }
+compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
+coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil3" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
 compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "composeMultiplatform" }

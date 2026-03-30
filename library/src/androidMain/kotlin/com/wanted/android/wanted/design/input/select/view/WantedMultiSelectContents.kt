@@ -24,18 +24,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.bumptech.glide.integration.compose.GlideImage
-import com.wanted.android.designsystem.R
+import coil3.compose.AsyncImage
 import com.wanted.android.wanted.design.input.select.LocalWantedSelectBackground
 import com.wanted.android.wanted.design.input.select.WantedSelectData
 import com.wanted.android.wanted.design.input.select.WantedSelectDefaults
 import com.wanted.android.wanted.design.theme.DesignSystemTheme
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun WantedMultiSelectContents(
@@ -204,24 +202,19 @@ private fun WantedMultiSelectChipList(
             error = errorList.contains(valueList[index]),
             leadingIcon = if (valueList[index].iconUrl.isNotEmpty()) {
                 {
-                    GlideImage(
+                    AsyncImage(
                         modifier = Modifier.size(11.dp),
                         model = valueList[index].iconUrl,
-                        alignment = Alignment.Center,
                         contentScale = ContentScale.Crop,
                         contentDescription = ""
                     )
                 }
-            } else if (valueList[index].iconRes != 0) {
+            } else if (valueList[index].iconResource != null) {
                 {
                     Icon(
                         modifier = Modifier.fillMaxSize(),
-                        painter = painterResource(id = R.drawable.icon_normal_close),
-                        tint = if (valueList[index].tint != 0) {
-                            colorResource(id = valueList[index].tint)
-                        } else {
-                            LocalContentColor.current
-                        },
+                        painter = painterResource(valueList[index].iconResource!!),
+                        tint = valueList[index].iconTint ?: LocalContentColor.current,
                         contentDescription = ""
                     )
                 }

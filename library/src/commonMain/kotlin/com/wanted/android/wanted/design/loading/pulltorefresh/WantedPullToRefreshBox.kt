@@ -1,6 +1,5 @@
 package com.wanted.android.wanted.design.loading.pulltorefresh
 
-import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.RepeatMode
@@ -9,6 +8,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -24,7 +24,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,10 +32,10 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.rememberLottieComposition
-import kotlinx.coroutines.launch
+import com.wanted.android.wanted.design.resources.Res
+import io.github.alexzhirkevich.compottie.LottieCompositionSpec
+import io.github.alexzhirkevich.compottie.rememberLottieComposition
+import io.github.alexzhirkevich.compottie.rememberLottiePainter
 
 /**
  * WantedPullToRefreshBox
@@ -45,26 +44,6 @@ import kotlinx.coroutines.launch
  *
  * 시스템 다크 모드에 따라 Lottie 애니메이션이 자동으로 전환되며,
  * 사용자가 화면을 아래로 당겨 새로고침을 실행할 수 있습니다.
- *
- * 사용 예시:
- * ```kotlin
- * var isRefreshing by remember { mutableStateOf(false) }
- *
- * WantedPullToRefreshBox(
- *     isRefreshing = isRefreshing,
- *     onRefresh = {
- *         isRefreshing = true
- *         // 새로고침 처리
- *         isRefreshing = false
- *     }
- * ) {
- *     LazyColumn {
- *         items(list) { item ->
- *             Text(text = item)
- *         }
- *     }
- * }
- * ```
  *
  * @param isRefreshing Boolean: 현재 새로고침 중인지 여부입니다.
  * @param onRefresh () -> Unit: 사용자가 당겨서 새로고침을 요청했을 때 호출되는 콜백입니다.
@@ -80,27 +59,24 @@ fun WantedPullToRefreshBox(
     state: PullToRefreshState = rememberPullToRefreshState(),
     content: @Composable BoxScope.() -> Unit,
 ) {
-    val scope = rememberCoroutineScope()
     val scale = remember { Animatable(1f) }
     var isRefresh by remember(isRefreshing) { mutableStateOf(isRefreshing) }
     var isPullEnd by remember { mutableStateOf(true) }
     val density = LocalDensity.current
 
-    // Alpha 애니메이션
     val alpha by rememberInfiniteTransition(label = "").animateFloat(
         initialValue = 1f,
         targetValue = if (isPullEnd) 0.61f else 1f,
         animationSpec = infiniteRepeatable(
             animation = tween(
                 durationMillis = 1000,
-                easing = CubicBezierEasing(0.42f, 0.0f, 0.58f, 1.0f)
+                easing = easingCurve
             ),
             repeatMode = RepeatMode.Reverse
         ),
         label = ""
     )
 
-    // Refresh 상태 관리
     LaunchedEffect(state.distanceFraction, state.isAnimating) {
         if (state.distanceFraction <= 0f) {
             isPullEnd = false
@@ -108,23 +84,19 @@ fun WantedPullToRefreshBox(
 
         if (state.isAnimating && !isRefresh && state.distanceFraction > 1.1f) {
             isRefresh = true
-            scope.launch {
-                scale.animateTo(
-                    1.05f,
-                    animationSpec = tween(250, easing = easingCurve)
-                )
-
-                scale.animateTo(
-                    1f,
-                    animationSpec = tween(250, easing = easingCurve)
-                )
-                isPullEnd = true
-                onRefresh()
-            }
+            scale.animateTo(
+                1.05f,
+                animationSpec = tween(250, easing = easingCurve)
+            )
+            scale.animateTo(
+                1f,
+                animationSpec = tween(250, easing = easingCurve)
+            )
+            isPullEnd = true
+            onRefresh()
         }
     }
 
-    // PullToRefreshBox 구현
     PullToRefreshBox(
         modifier = modifier,
         isRefreshing = isRefresh,
@@ -146,20 +118,12 @@ fun WantedPullToRefreshBox(
                 .graphicsLayer {
                     translationY = when {
                         isRefresh -> {
-                            val result = state.distanceFraction * with(density) { ((SIZE_HEIGHT + INDICATOR_PADDING) * 2).toPx() }
-                            Log.d("WantedPullToRefreshBox", "animateTransitionY isRefresh ${state.distanceFraction}  $result")
                             state.distanceFraction * with(density) { ((SIZE_HEIGHT + INDICATOR_PADDING) * 2).toPx() }
                         }
-                        // 들어갈때 Container 위치
                         isPullEnd -> {
-                            val result = state.distanceFraction * (SIZE_HEIGHT * 0.5f).toPx()
-                            Log.d("WantedPullToRefreshBox", "animateTransitionY isPullEnd ${state.distanceFraction}  $result")
                             state.distanceFraction * (SIZE_HEIGHT * 0.5f).toPx()
                         }
-                        // 땡겼을때 Container 위치
                         else -> {
-                            val result = state.distanceFraction * with(density) { ((SIZE_HEIGHT + INDICATOR_PADDING) * 3).toPx() }
-                            Log.d("WantedPullToRefreshBox", "animateTransitionY else  ${state.distanceFraction}  $result")
                             state.distanceFraction * with(density) { ((SIZE_HEIGHT + INDICATOR_PADDING) * 3).toPx() }
                         }
                     }
@@ -187,11 +151,8 @@ private fun RefreshIndicator(
                 .scale(scale)
                 .graphicsLayer {
                     translationY = when {
-                        // 로딩중일때 indicator 위치
                         isRefresh -> (SIZE_HEIGHT * 0.5f).toPx()
-                        // 들어갈때 indicator 위치
                         isPullEnd -> state.distanceFraction * SIZE_HEIGHT.toPx() - SIZE_HEIGHT.toPx()
-                        // 땡길때 indicator 위치
                         else -> state.distanceFraction * (SIZE_HEIGHT * 2).toPx() - SIZE_HEIGHT.toPx()
                     }
                     clip = true
@@ -207,29 +168,29 @@ private fun ProgressIndicator(
     progress: Float,
     modifier: Modifier = Modifier,
 ) {
-    val composition by rememberLottieComposition(
-        LottieCompositionSpec.Asset(
-            assetName = if (isSystemInDarkTheme()) {
-                "pullToRefresh-pull-dark.json"
-            } else {
-                "pullToRefresh-pull.json"
-            }
-        )
-    )
+    val animationFile = if (isSystemInDarkTheme()) {
+        "pullToRefresh-pull-dark.json"
+    } else {
+        "pullToRefresh-pull.json"
+    }
+    val composition by rememberLottieComposition {
+        val animationBytes = Res.readBytes("files/$animationFile")
+        LottieCompositionSpec.JsonString(animationBytes.decodeToString())
+    }
 
-    LottieAnimation(
+    Image(
         modifier = modifier
             .padding(4.dp)
             .fillMaxSize(),
-        composition = composition,
-        progress = { progress }
+        painter = rememberLottiePainter(
+            composition = composition,
+            progress = { progress }
+        ),
+        contentDescription = ""
     )
 }
 
-// Constants
 private val SIZE_WIDTH = 50.dp
 private val SIZE_HEIGHT = 40.dp
 private val INDICATOR_PADDING = 5.dp
-
-// Common easing curve
 private val easingCurve = CubicBezierEasing(0.42f, 0.0f, 0.58f, 1.0f)
