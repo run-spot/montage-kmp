@@ -13,11 +13,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.placeholder
-import com.wanted.android.designsystem.R
+import coil3.compose.AsyncImage
+import com.wanted.android.wanted.design.resources.Res
+import com.wanted.android.wanted.design.resources.profile_default
 import com.wanted.android.wanted.design.theme.DesignSystemTheme
 import com.wanted.android.wanted.design.util.OPACITY_5
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun WantedPersonAvatar(
@@ -27,6 +28,7 @@ fun WantedPersonAvatar(
     borderColor: Color = DesignSystemTheme.colors.labelNormal.copy(alpha = OPACITY_5),
     alpha: Float = 1f,
 ) {
+    val defaultPainter = painterResource(Res.drawable.profile_default)
     val baseModifier = Modifier
         .size(size)
         .clip(CircleShape)
@@ -40,15 +42,16 @@ fun WantedPersonAvatar(
     Box(
         modifier = modifier.then(baseModifier)
     ) {
-        GlideImage(
+        AsyncImage(
             modifier = Modifier
                 .size(size)
                 .clip(CircleShape)
                 .alpha(alpha),
             model = profileImageUrl,
             contentDescription = "Profile Image",
-            loading = placeholder(R.drawable.profile_default),
-            failure = placeholder(R.drawable.profile_default),
+            placeholder = defaultPainter,
+            error = defaultPainter,
+            fallback = defaultPainter,
             contentScale = ContentScale.Crop,
         )
     }

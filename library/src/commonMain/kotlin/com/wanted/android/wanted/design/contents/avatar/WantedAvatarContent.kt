@@ -1,55 +1,55 @@
 package com.wanted.android.wanted.design.contents.avatar
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.placeholder
+import coil3.compose.AsyncImage
 import com.wanted.android.wanted.design.theme.DesignSystemTheme
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 
 @Composable
 internal fun WantedAvatarContent(
     modifier: Modifier = Modifier,
     model: Any?,
-    @DrawableRes placeHolder: Int? = null,
+    placeHolder: DrawableResource? = null,
     isDrawableRes: Boolean = false,
     alignment: Alignment = Alignment.Center,
     contentScale: ContentScale = ContentScale.Fit
 ) {
     model?.let {
-        if (isDrawableRes && model is Int) {
-            Icon(
+        if ((isDrawableRes && model is DrawableResource) || model is DrawableResource) {
+            Image(
                 modifier = modifier,
-                painter = painterResource(id = model),
+                painter = painterResource(model as DrawableResource),
                 contentDescription = "",
-                tint = Color.Unspecified
+                contentScale = contentScale
             )
         } else {
-            GlideImage(
+            val placeholderPainter = placeHolder?.let { painterResource(it) }
+            AsyncImage(
                 modifier = modifier,
                 model = model,
                 contentDescription = "",
                 alignment = alignment,
                 contentScale = contentScale,
-                loading = placeHolder?.let { placeholder(it) },
-                failure = placeHolder?.let { placeholder(it) },
+                placeholder = placeholderPainter,
+                error = placeholderPainter,
+                fallback = placeholderPainter,
             )
         }
     } ?: run {
         placeHolder?.let {
-            Icon(
+            Image(
                 modifier = modifier,
-                painter = painterResource(id = placeHolder),
+                painter = painterResource(placeHolder),
                 contentDescription = "",
-                tint = Color.Unspecified
+                contentScale = contentScale
             )
         } ?: run {
             Box(
