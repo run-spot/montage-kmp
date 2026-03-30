@@ -1,3 +1,5 @@
+@file:JvmName("WantedButtonSideIconAndroidKt")
+
 package com.wanted.android.wanted.design.actions.button.view
 
 import androidx.compose.foundation.Image
@@ -7,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import kotlin.jvm.JvmName
 
 @Composable
 internal fun WantedButtonSideIcon(

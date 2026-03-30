@@ -9,6 +9,11 @@ plugins {
     id("maven-publish")
 }
 
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.wanted.android.wanted.design.resources"
+}
+
 kotlin {
     androidTarget {
         publishLibraryVariants("release")
@@ -43,6 +48,7 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
+            implementation(libs.compose.components.resources)
         }
 
         commonTest.dependencies {

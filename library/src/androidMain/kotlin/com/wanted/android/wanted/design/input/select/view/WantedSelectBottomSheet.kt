@@ -26,6 +26,8 @@ import com.wanted.android.wanted.design.input.select.WantedSelectDefaults
 import com.wanted.android.wanted.design.input.select.WantedSelectData
 import com.wanted.android.wanted.design.presentation.modal.bottomsheet.WantedModalBottomSheet
 import com.wanted.android.wanted.design.presentation.modal.WantedModalContract.ModalType
+import com.wanted.android.wanted.design.resources.Res
+import com.wanted.android.wanted.design.resources.icon_normal_refresh
 import com.wanted.android.wanted.design.util.ButtonType
 import com.wanted.android.wanted.design.util.ButtonVariant
 
@@ -126,7 +128,7 @@ internal fun WantedSelectBottomSheet(
                         text = "",
                         variant = ButtonVariant.OUTLINED,
                         type = ButtonType.ASSISTIVE,
-                        leadingDrawable = R.drawable.icon_normal_refresh,
+                        leadingIconResource = Res.drawable.icon_normal_refresh,
                         onClick = {
                             selectItem.value = selectedItem
                         }

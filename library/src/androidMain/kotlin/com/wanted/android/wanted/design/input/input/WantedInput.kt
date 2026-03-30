@@ -1,3 +1,5 @@
+@file:JvmName("WantedInputAndroidKt")
+
 package com.wanted.android.wanted.design.input.input
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -29,7 +31,7 @@ import com.wanted.android.wanted.design.input.input.control.CheckBoxStyle
 import com.wanted.android.wanted.design.input.input.control.WantedCheckBox
 import com.wanted.android.wanted.design.theme.DesignSystemTheme
 import com.wanted.android.wanted.design.util.DevicePreviews
-import com.wanted.android.wanted.design.util.clickOnce
+import kotlin.jvm.JvmName
 
 
 /**
@@ -97,58 +99,52 @@ fun WantedInput(
     val checkBoxInteractionSource: MutableInteractionSource =
         remember { MutableInteractionSource() }
 
-    ProvideTextStyle(value = textStyle) {
-        WantedInputLayout(
-            modifier = modifier
-                .clickOnce(
-                    enabled = enabled,
-                    interactionSource = interactionSource,
-                    indication = null
-                ) {
-                    if (checkBoxState == CheckBoxState.Unchecked) {
-                        onCheckedChange(true)
-                    } else {
-                        onCheckedChange(false)
-                    }
-
-                    val offset = with(density) {
-                        (if (size == WantedInputSize.Medium) 16.dp else 12.dp).toPx()
-                    }
-
-                    val press = PressInteraction.Press(Offset(offset, offset))
-                    checkBoxInteractionSource.tryEmit(press)
-                    checkBoxInteractionSource.tryEmit(PressInteraction.Release(press))
+    WantedInput(
+        modifier = modifier,
+        label = label,
+        size = size,
+        bold = bold,
+        enabled = enabled,
+        tight = tight,
+        textStyle = textStyle,
+        interactionSource = interactionSource,
+        leadingIcon = {
+            WantedCheckBox(
+                modifier = Modifier,
+                size = if (size == WantedInputSize.Medium) {
+                    CheckBoxSize.Normal
+                } else {
+                    CheckBoxSize.Small
                 },
-            size = size,
-            tight = tight,
-            textStyle = textStyle,
-            leadingIcon = {
-                WantedCheckBox(
-                    modifier = Modifier,
-                    size = if (size == WantedInputSize.Medium) {
-                        CheckBoxSize.Normal
-                    } else {
-                        CheckBoxSize.Small
-                    },
-                    style = when (variant) {
-                        WantedInputVariant.CheckBox -> CheckBoxStyle.CheckBox
-                        WantedInputVariant.Radio -> CheckBoxStyle.Radio
-                        WantedInputVariant.CheckMark -> CheckBoxStyle.Check
-                        WantedInputVariant.Switch -> CheckBoxStyle.Switch
-                    },
-                    checkState = checkBoxState,
-                    tight = tight,
-                    enabled = enabled,
-                    interactionSource = checkBoxInteractionSource,
-                    onCheckedChange = onCheckedChange
-
-                )
-            },
-            label = {
-                Text(text = label)
+                style = when (variant) {
+                    WantedInputVariant.CheckBox -> CheckBoxStyle.CheckBox
+                    WantedInputVariant.Radio -> CheckBoxStyle.Radio
+                    WantedInputVariant.CheckMark -> CheckBoxStyle.Check
+                    WantedInputVariant.Switch -> CheckBoxStyle.Switch
+                },
+                checkState = checkBoxState,
+                tight = tight,
+                enabled = enabled,
+                interactionSource = checkBoxInteractionSource,
+                onCheckedChange = onCheckedChange
+            )
+        },
+        onClick = {
+            if (checkBoxState == CheckBoxState.Unchecked) {
+                onCheckedChange(true)
+            } else {
+                onCheckedChange(false)
             }
-        )
-    }
+
+            val offset = with(density) {
+                (if (size == WantedInputSize.Medium) 16.dp else 12.dp).toPx()
+            }
+
+            val press = PressInteraction.Press(Offset(offset, offset))
+            checkBoxInteractionSource.tryEmit(press)
+            checkBoxInteractionSource.tryEmit(PressInteraction.Release(press))
+        }
+    )
 }
 
 @DevicePreviews
