@@ -1,0 +1,34 @@
+package com.wanted.android.wanted.design.contents.accordion
+
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.wanted.android.wanted.design.resources.Res
+import com.wanted.android.wanted.design.resources.icon_normal_chevron_down
+import com.wanted.android.wanted.design.resources.icon_normal_chevron_up
+import org.jetbrains.compose.resources.painterResource
+
+@Composable
+internal fun WantedAccordionTrailArrowIcon(
+    isExpanded: Boolean,
+    tint: Color,
+    modifier: Modifier = Modifier
+) {
+    Icon(
+        modifier = modifier
+            .clip(CircleShape)
+            .size(20.dp),
+        painter = if (isExpanded) {
+            painterResource(Res.drawable.icon_normal_chevron_up)
+        } else {
+            painterResource(Res.drawable.icon_normal_chevron_down)
+        },
+        tint = tint,
+        contentDescription = ""
+    )
+}

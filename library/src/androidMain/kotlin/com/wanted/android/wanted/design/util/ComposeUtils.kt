@@ -6,7 +6,6 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
-import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
@@ -31,7 +30,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
-import com.wanted.android.wanted.design.theme.DesignSystemTheme
 @Composable
 fun WantedTextStyle(colorRes: Int, style: TextStyle, alpha: Float? = null) = style.merge(
     TextStyle(
@@ -41,13 +39,6 @@ fun WantedTextStyle(colorRes: Int, style: TextStyle, alpha: Float? = null) = sty
             alpha?.let { color.copy(alpha = it) } ?: color
         }
     )
-)
-
-@Composable
-fun wantedRippleEffect(
-    color: Color = DesignSystemTheme.colorsOpacity.labelNormalOpacity12,
-) = ripple(
-    color = color,
 )
 
 @Composable
