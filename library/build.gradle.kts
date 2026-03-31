@@ -191,6 +191,15 @@ afterEvaluate {
     }.configureEach {
         enabled = false
     }
+
+    // Ensure the Kotlin tooling metadata artifact exists before KMP publication validation/upload.
+    tasks.matching {
+        it.name == "generateMetadataFileForKotlinMultiplatformPublication" ||
+            it.name == "publishKotlinMultiplatformPublicationToMavenCentralRepository" ||
+            it.name == "publishAndReleaseToMavenCentral"
+    }.configureEach {
+        dependsOn("buildKotlinToolingMetadata")
+    }
 }
 
 mavenPublishing {
