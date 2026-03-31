@@ -3,7 +3,6 @@
 **Jetpack Compose로 구축된 현대적인 Android 디자인 시스템**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![](https://jitpack.io/v/wanteddev/montage-android.svg)](https://jitpack.io/#wanteddev/montage-android)
 [![Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0-blue.svg)](https://kotlinlang.org)
 [![Compose](https://img.shields.io/badge/Jetpack%20Compose-Latest-brightgreen.svg)](https://developer.android.com/jetpack/compose)
@@ -44,9 +43,9 @@
 
 ## 📦 설치
 
-Montage Android는 **JitPack + Git tag 기반**으로 배포됩니다.
+Montage는 **Maven Central**로 배포됩니다.
 
-### 1️⃣ JitPack 저장소 추가
+### 1️⃣ Maven Central 저장소 추가
 
 `settings.gradle.kts`
 
@@ -55,7 +54,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") }
     }
 }
 ```
@@ -66,11 +64,11 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
-    implementation("com.github.wanteddev:montage-android:latestVersion")
+    implementation("run.thespot.montage:montage-kmp:0.0.1")
 }
 ```
 
-> 💡 버전은 Git tag 기준입니다.
+> 💡 배포 버전은 `library/publish.properties`와 Git tag를 동일하게 맞춰야 합니다.
 
 ---
 
@@ -97,8 +95,8 @@ fun ExampleScreen() {
 
 ```bash
 # 저장소 클론
-git clone https://github.com/wanteddev/montage-android.git
-cd montage-android
+git clone https://github.com/run-spot/montage-kmp.git
+cd montage-kmp
 
 # 빌드
 ./gradlew :library:build

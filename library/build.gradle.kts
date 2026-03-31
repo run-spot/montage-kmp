@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.compose.multiplatform)
-    id("maven-publish")
+    alias(libs.plugins.maven.publish)
 }
 
 compose.resources {
@@ -113,10 +113,6 @@ android {
     }
 
     publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
     }
 
     compileOptions {
@@ -167,7 +163,7 @@ if (publishPropertiesFile.exists()) {
     publishPropertiesFile.inputStream().use { fis -> publishProperties.load(fis) }
 }
 
-group = publishProperties.getProperty("groupId") ?: "com.wanted.android"
+group = publishProperties.getProperty("groupId") ?: "run.thespot.montage"
 version = publishProperties.getProperty("version") ?: "0.1.0-SNAPSHOT"
 
 val libArtifactId = publishProperties.getProperty("artifactId") ?: "montage-kmp"
@@ -195,51 +191,43 @@ afterEvaluate {
     }.configureEach {
         enabled = false
     }
+}
 
-    publishing {
-        publications.withType<MavenPublication>().configureEach {
-            artifactId = when (name) {
-                "kotlinMultiplatform" -> libArtifactId
-                "androidRelease" -> "${libArtifactId}-android"
-                else -> artifactId
-            }
+mavenPublishing {
+    publishToMavenCentral(automaticRelease = true)
+    signAllPublications()
 
-            pom {
-                name.set("Montage KMP Design System")
-                description.set("Montage design system library prepared for Kotlin Multiplatform migration")
-                url.set("https://github.com/run-spot/montage-kmp")
+    coordinates(
+        group.toString(),
+        libArtifactId,
+        version.toString()
+    )
 
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
+    pom {
+        name.set("Montage KMP Design System")
+        description.set("Montage design system library prepared for Kotlin Multiplatform migration")
+        url.set("https://github.com/run-spot/montage-kmp")
 
-                developers {
-                    developer {
-                        id.set("wanteddev")
-                        name.set("Wanted")
-                    }
-                }
-
-                scm {
-                    connection.set("scm:git:git://github.com/run-spot/montage-kmp.git")
-                    developerConnection.set("scm:git:ssh://github.com/run-spot/montage-kmp.git")
-                    url.set("https://github.com/run-spot/montage-kmp")
-                }
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://opensource.org/licenses/MIT")
+                distribution.set("https://opensource.org/licenses/MIT")
             }
         }
 
-        repositories {
-            maven {
-                name = "GithubPackages"
-                url = uri("https://maven.pkg.github.com/run-spot/montage-kmp")
-                credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-                    password = System.getenv("GITHUB_TOKEN")
-                }
+        developers {
+            developer {
+                id.set("runthespot")
+                name.set("RunTheSpot")
+                url.set("https://github.com/run-spot")
             }
+        }
+
+        scm {
+            url.set("https://github.com/run-spot/montage-kmp")
+            connection.set("scm:git:git://github.com/run-spot/montage-kmp.git")
+            developerConnection.set("scm:git:ssh://git@github.com/run-spot/montage-kmp.git")
         }
     }
 }
