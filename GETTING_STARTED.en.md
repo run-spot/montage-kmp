@@ -3,7 +3,6 @@
 **A Modern Android Design System Built with Jetpack Compose**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![](https://jitpack.io/v/wanteddev/montage-android.svg)](https://jitpack.io/#wanteddev/montage-android)
 [![Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0-blue.svg)](https://kotlinlang.org)
 [![Compose](https://img.shields.io/badge/Jetpack%20Compose-Latest-brightgreen.svg)](https://developer.android.com/jetpack/compose)
@@ -44,9 +43,9 @@ It is designed to ensure consistent UI/UX and boost productivity, providing comp
 
 ## 📦 Installation
 
-Montage Android is distributed via **JitPack + Git tags**.
+Montage is distributed via **Maven Central**.
 
-### 1️⃣ Add JitPack Repository
+### 1️⃣ Add Maven Central Repository
 
 `settings.gradle.kts`
 
@@ -55,7 +54,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") }
     }
 }
 ```
@@ -66,11 +64,11 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
-    implementation("com.github.wanteddev:montage-android:latestVersion")
+    implementation("run.thespot.montage:montage-kmp:0.0.1")
 }
 ```
 
-> 💡 Versions are based on Git tags.
+> 💡 The release version in `library/publish.properties` must match the Git tag.
 
 ---
 
@@ -97,8 +95,8 @@ fun ExampleScreen() {
 
 ```bash
 # Clone repository
-git clone https://github.com/wanteddev/montage-android.git
-cd montage-android
+git clone https://github.com/run-spot/montage-kmp.git
+cd montage-kmp
 
 # Build
 ./gradlew :library:build

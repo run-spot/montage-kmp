@@ -25,7 +25,7 @@ jobs:
             git checkout main
             git reset --hard origin/main
           else
-            git clone --branch main https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/wanteddev/montage-android.git .
+            git clone --branch main https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/run-spot/montage-kmp.git .
           fi
 
       - name: Verify Java

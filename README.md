@@ -7,7 +7,6 @@ Wanted Lab Design System for Android
 ![hero](https://static.wanted.co.kr/montage-github/thumbnail.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![](https://jitpack.io/v/wanteddev/montage-android.svg)](https://jitpack.io/#wanteddev/montage-android)
 [![Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0-blue.svg)](https://kotlinlang.org)
 [![Compose](https://img.shields.io/badge/Jetpack%20Compose-Latest-brightgreen.svg)](https://developer.android.com/jetpack/compose)
@@ -21,9 +20,9 @@ Visit [https://montage.wanted.co.kr](https://montage.wanted.co.kr) to view the d
 
 ## 📦 Installation
 
-Montage Android is distributed via **JitPack + Git tags**.
+Montage is distributed via **Maven Central**.
 
-### 1️⃣ Add JitPack Repository
+### 1️⃣ Add Maven Central Repository
 
 `settings.gradle.kts`
 
@@ -32,7 +31,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") }
     }
 }
 ```
@@ -43,7 +41,7 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
-    implementation("com.github.wanteddev:montage-android:latestVersion")
+    implementation("run.thespot.montage:montage-kmp:0.0.1")
 }
 ```
 
