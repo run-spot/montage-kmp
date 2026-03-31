@@ -164,7 +164,9 @@ if (publishPropertiesFile.exists()) {
 }
 
 group = publishProperties.getProperty("groupId") ?: "run.thespot.montage"
-version = publishProperties.getProperty("version") ?: "0.1.0-SNAPSHOT"
+version = (findProperty("version") as String?)
+    ?: publishProperties.getProperty("version")
+    ?: "0.1.0-SNAPSHOT"
 
 val libArtifactId = publishProperties.getProperty("artifactId") ?: "montage-kmp"
 
@@ -190,6 +192,10 @@ afterEvaluate {
         it.name.contains("lint", ignoreCase = true)
     }.configureEach {
         enabled = false
+    }
+
+    tasks.named("buildKotlinToolingMetadata").configure {
+        enabled = true
     }
 
     // Ensure the Kotlin tooling metadata artifact exists before KMP publication validation/upload.
