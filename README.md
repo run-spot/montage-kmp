@@ -43,7 +43,7 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
-    implementation("run.thespot.montage:montage-kmp:0.0.6")
+    implementation("run.thespot.montage:montage-kmp:<latest-version>")
 }
 ```
 
@@ -52,7 +52,7 @@ Current coordinates:
 ```text
 groupId: run.thespot.montage
 artifactId: montage-kmp
-version: 0.0.6
+version: <latest-version>
 ```
 
 ## Getting Started
