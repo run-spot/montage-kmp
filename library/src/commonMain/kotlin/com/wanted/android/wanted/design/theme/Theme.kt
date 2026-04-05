@@ -11,16 +11,21 @@ import androidx.compose.runtime.ReadOnlyComposable
 @Composable
 fun DesignSystemTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
-    appTheme: WantedColorScheme = AppWantedColorScheme,
+    appTheme: WantedColorScheme = LightWantedColorScheme,
+    darkAppTheme: WantedColorScheme = DarkWantedColorScheme,
     content: @Composable () -> Unit
 ) {
+    val activeTheme = if (isDarkTheme) darkAppTheme else appTheme
     CompositionLocalProvider(
         LocalWantedTypography.provides(WantedTypography()),
-        LocalWantedColorScheme provides appTheme,
+        LocalWantedColorScheme provides activeTheme,
         LocalWantedColorOpacityScheme provides AppWantedColorOpacityScheme
     ) {
         MaterialTheme(
-            colorScheme = LocalWantedColorScheme.getSystemColor(isDarkTheme),
+            colorScheme = LocalWantedColorScheme.getSystemColor(
+                colorScheme = activeTheme,
+                isDarkTheme = isDarkTheme
+            ),
             typography = pretendardTypography,
             shapes = OneIdShapes,
             content = content
