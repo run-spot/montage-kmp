@@ -152,10 +152,10 @@ val DarkWantedColorScheme = WantedColorScheme(
     primaryStrong = WantedAtomicColors.blue55,
     primaryHeavy = WantedAtomicColors.blue50,
 
-    labelNormal = WantedAtomicColors.coolNeutral10,
+    labelNormal = WantedAtomicColors.coolNeutral99,
     labelStrong = WantedAtomicColors.common100,
     labelNeutral = WantedAtomicColors.coolNeutral90Opacity88,
-    labelAlternative = WantedAtomicColors.coolNeutral25,
+    labelAlternative = WantedAtomicColors.coolNeutral80Opacity61,
     labelAssistive = WantedAtomicColors.coolNeutral80Opacity28,
     labelDisable = WantedAtomicColors.coolNeutral70Opacity16,
 
@@ -163,8 +163,8 @@ val DarkWantedColorScheme = WantedColorScheme(
     backgroundNormalAlternative = WantedAtomicColors.coolNeutral5,
     backgroundElevatedNormal = WantedAtomicColors.coolNeutral17,
     backgroundElevatedAlternative = WantedAtomicColors.coolNeutral7,
-    backgroundTransparentNormal = WantedAtomicColors.common100,
-    backgroundTransparentAlternative = WantedAtomicColors.common100,
+    backgroundTransparentNormal = WantedAtomicColors.coolNeutral17Opacity61,
+    backgroundTransparentAlternative = WantedAtomicColors.coolNeutral17Opacity61,
 
     interactionInactive = WantedAtomicColors.coolNeutral40,
     interactionDisable = WantedAtomicColors.coolNeutral22,
