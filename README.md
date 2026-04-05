@@ -11,6 +11,7 @@ Wanted Lab Design System for Android
 [![iOS](https://img.shields.io/badge/Platform-iOS-blue.svg)](https://developer.apple.com/ios/)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2.20-blue.svg)](https://kotlinlang.org)
 [![Compose](https://img.shields.io/badge/Jetpack%20Compose-Latest-brightgreen.svg)](https://developer.android.com/jetpack/compose)
+[![Maven Central](https://img.shields.io/maven-central/v/run.thespot.montage/montage-kmp?label=Maven%20Central)](https://central.sonatype.com/artifact/run.thespot.montage/montage-kmp)
 
 
 
