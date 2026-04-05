@@ -102,9 +102,9 @@ val LightWantedColorScheme = WantedColorScheme(
     interactionInactive = WantedAtomicColors.coolNeutral70,
     interactionDisable = WantedAtomicColors.coolNeutral98,
 
-    lineNormalNormal = WantedAtomicColors.coolNeutral50,
-    lineNormalNeutral = WantedAtomicColors.coolNeutral50,
-    lineNormalAlternative = WantedAtomicColors.coolNeutral50,
+    lineNormalNormal = WantedAtomicColors.coolNeutral50Opacity22,
+    lineNormalNeutral = WantedAtomicColors.coolNeutral50Opacity16,
+    lineNormalAlternative = WantedAtomicColors.coolNeutral50Opacity8,
     lineSolidNormal = WantedAtomicColors.coolNeutral96,
     lineSolidNeutral = WantedAtomicColors.coolNeutral97,
     lineSolidAlternative = WantedAtomicColors.coolNeutral98,
