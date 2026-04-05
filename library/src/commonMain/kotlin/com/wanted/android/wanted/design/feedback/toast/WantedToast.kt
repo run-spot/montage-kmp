@@ -72,6 +72,14 @@ internal fun WantedToastImpl(
     variant: WantedToastVariant = WantedToastVariant.Message,
     icon: @Composable (() -> Unit)? = null
 ) {
+    val backgroundTintColor = DesignSystemTheme.colors.staticWhite
+    val tintColor = when (variant) {
+        WantedToastVariant.Message -> null
+        WantedToastVariant.Positive -> DesignSystemTheme.colors.statusPositive
+        WantedToastVariant.Cautionary -> DesignSystemTheme.colors.statusCautionary
+        WantedToastVariant.Negative -> DesignSystemTheme.colors.statusNegative
+    }
+
     val iconSlot: @Composable (() -> Unit)? = when (variant) {
         WantedToastVariant.Message -> icon
         else -> {
@@ -80,8 +88,8 @@ internal fun WantedToastImpl(
                     modifier = Modifier.fillMaxSize(),
                     resource = requireNotNull(variant.resource),
                     backgroundResource = variant.backgroundResource,
-                    backgroundColor = variant.backgroundTintColor,
-                    tint = requireNotNull(variant.tintColor)
+                    backgroundColor = backgroundTintColor,
+                    tint = requireNotNull(tintColor)
                 )
             }
         }
