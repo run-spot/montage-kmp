@@ -80,34 +80,34 @@ data class WantedColorScheme(
 
 private fun color(value: Long) = Color(value)
 
-val AppWantedColorScheme = WantedColorScheme(
+val LightWantedColorScheme = WantedColorScheme(
     staticWhite = color(0xFFFFFFFF),
     staticBlack = color(0xFF000000),
 
     primaryNormal = color(0xFF0066FF),
-    primaryStrong = color(0xFF005EED),
+    primaryStrong = color(0xFF005EEB),
     primaryHeavy = color(0xFF0054D1),
 
-    labelNormal = color(0xFF171717),
+    labelNormal = color(0xFF171719),
     labelStrong = color(0xFF000000),
-    labelNeutral = color(0xE02E2F33),
-    labelAlternative = color(0x9C37383C),
-    labelAssistive = color(0x4737383C),
-    labelDisable = color(0x2937383C),
+    labelNeutral = color(0xFF2E2F33),
+    labelAlternative = color(0xFF37383C),
+    labelAssistive = color(0xFF37383C),
+    labelDisable = color(0xFF37383C),
 
     backgroundNormalNormal = color(0xFFFFFFFF),
     backgroundNormalAlternative = color(0xFFF7F7F8),
     backgroundElevatedNormal = color(0xFFFFFFFF),
     backgroundElevatedAlternative = color(0xFFF7F7F8),
-    backgroundTransparentNormal = color(0x14FFFFFF),
-    backgroundTransparentAlternative = color(0x47FFFFFF),
+    backgroundTransparentNormal = color(0xFFFFFFFF),
+    backgroundTransparentAlternative = color(0xFFFFFFFF),
 
     interactionInactive = color(0xFF989BA2),
     interactionDisable = color(0xFFF4F4F5),
 
-    lineNormalNormal = color(0x3870737C),
-    lineNormalNeutral = color(0x2970737C),
-    lineNormalAlternative = color(0x1470737C),
+    lineNormalNormal = color(0xFF70737C),
+    lineNormalNeutral = color(0xFF70737C),
+    lineNormalAlternative = color(0xFF70737C),
     lineSolidNormal = color(0xFFE1E2E4),
     lineSolidNeutral = color(0xFFEAEBEC),
     lineSolidAlternative = color(0xFFF4F4F5),
@@ -137,7 +137,74 @@ val AppWantedColorScheme = WantedColorScheme(
     accentForegroundPink = color(0xFFE846CD),
 
     inversePrimary = color(0xFF3385FF),
-    inverseBackground = color(0xFF1C1C1C),
+    inverseBackground = color(0xFF1B1C1E),
+    inverseLabel = color(0xFFF7F7F8),
+
+    fillNormal = color(0xFF70737C),
+    fillStrong = color(0xFF70737C),
+    fillAlternative = color(0xFF70737C),
+
+    materialDimmer = color(0xFF171719),
+)
+
+val DarkWantedColorScheme = WantedColorScheme(
+    staticWhite = color(0xFFFFFFFF),
+    staticBlack = color(0xFF000000),
+
+    primaryNormal = color(0xFF0066FF),
+    primaryStrong = color(0xFF005EEB),
+    primaryHeavy = color(0xFF0054D1),
+
+    labelNormal = color(0xFF171719),
+    labelStrong = color(0xFF000000),
+    labelNeutral = color(0xE02E2F33),
+    labelAlternative = color(0xFF37383C),
+    labelAssistive = color(0x4737383C),
+    labelDisable = color(0x2937383C),
+
+    backgroundNormalNormal = color(0xFFFFFFFF),
+    backgroundNormalAlternative = color(0xFFF7F7F8),
+    backgroundElevatedNormal = color(0xFFFFFFFF),
+    backgroundElevatedAlternative = color(0xFFF7F7F8),
+    backgroundTransparentNormal = color(0xFFFFFFFF),
+    backgroundTransparentAlternative = color(0xFFFFFFFF),
+
+    interactionInactive = color(0xFF989BA2),
+    interactionDisable = color(0xFFF4F4F5),
+
+    lineNormalNormal = color(0xFF70737C),
+    lineNormalNeutral = color(0xFF70737C),
+    lineNormalAlternative = color(0x1470737C),
+    lineSolidNormal = color(0xFF37383C),
+    lineSolidNeutral = color(0xFF333438),
+    lineSolidAlternative = color(0xFF2E2F33),
+
+    statusPositive = color(0xFF00BF40),
+    statusNegative = color(0xFFFF4242),
+    statusCautionary = color(0xFFFF9200),
+
+    accentBackgroundLime = color(0xFF58CF04),
+    accentBackgroundCyan = color(0xFF00BDDE),
+    accentBackgroundLightBlue = color(0xFF00AEFF),
+    accentBackgroundViolet = color(0xFF6541F2),
+    accentBackgroundPurple = color(0xFFCB59FF),
+    accentBackgroundPink = color(0xFFF553DA),
+    accentBackgroundRedOrange = color(0xFFFF5E00),
+
+    accentForegroundRed = color(0xFFE52222),
+    accentForegroundRedOrange = color(0xFFF55A00),
+    accentForegroundOrange = color(0xFFD17600),
+    accentForegroundLime = color(0xFF429E00),
+    accentForegroundGreen = color(0xFF009632),
+    accentForegroundCyan = color(0xFF0098B2),
+    accentForegroundLightBlue = color(0xFF008DCF),
+    accentForegroundBlue = color(0xFF005EEB),
+    accentForegroundViolet = color(0xFF5B37ED),
+    accentForegroundPurple = color(0xFFAD36E3),
+    accentForegroundPink = color(0xFFE846CD),
+
+    inversePrimary = color(0xFF3385FF),
+    inverseBackground = color(0xFF1B1C1E),
     inverseLabel = color(0xFFF7F7F8),
 
     fillNormal = color(0x1470737C),
@@ -146,6 +213,9 @@ val AppWantedColorScheme = WantedColorScheme(
 
     materialDimmer = color(0x85171719),
 )
+
+// Backward-compatible alias for call sites that still expect a single default palette.
+val AppWantedColorScheme = LightWantedColorScheme
 
 internal val LocalWantedColorScheme = WantedColorSchemeLocal()
 
@@ -159,32 +229,34 @@ value class WantedColorSchemeLocal internal constructor(
     infix fun provides(value: WantedColorScheme) = delegate provides value
 
 
-    @Composable
-    fun getSystemColor(isDarkTheme: Boolean) = if (isDarkTheme) {
+    fun getSystemColor(
+        colorScheme: WantedColorScheme,
+        isDarkTheme: Boolean
+    ) = if (isDarkTheme) {
         darkColorScheme(
-            primary = current.primaryNormal,
-            secondary = current.primaryNormal,
-            background = current.backgroundNormalNormal,
-            surface = current.backgroundNormalNormal,
-            error = current.backgroundNormalNormal,
-            onPrimary = current.labelNormal,
-            onSecondary = current.labelNormal,
-            onBackground = current.labelNormal,
-            onSurface = current.labelNormal,
-            onError = current.statusNegative,
+            primary = colorScheme.primaryNormal,
+            secondary = colorScheme.primaryNormal,
+            background = colorScheme.backgroundNormalNormal,
+            surface = colorScheme.backgroundNormalNormal,
+            error = colorScheme.backgroundNormalNormal,
+            onPrimary = colorScheme.labelNormal,
+            onSecondary = colorScheme.labelNormal,
+            onBackground = colorScheme.labelNormal,
+            onSurface = colorScheme.labelNormal,
+            onError = colorScheme.statusNegative,
         )
     } else {
         lightColorScheme(
-            primary = current.primaryNormal,
-            secondary = current.primaryNormal,
-            background = current.backgroundNormalNormal,
-            surface = current.backgroundNormalNormal,
-            error = current.backgroundNormalNormal,
-            onPrimary = current.labelNormal,
-            onSecondary = current.labelNormal,
-            onBackground = current.labelNormal,
-            onSurface = current.labelNormal,
-            onError = current.statusNegative
+            primary = colorScheme.primaryNormal,
+            secondary = colorScheme.primaryNormal,
+            background = colorScheme.backgroundNormalNormal,
+            surface = colorScheme.backgroundNormalNormal,
+            error = colorScheme.backgroundNormalNormal,
+            onPrimary = colorScheme.labelNormal,
+            onSecondary = colorScheme.labelNormal,
+            onBackground = colorScheme.labelNormal,
+            onSurface = colorScheme.labelNormal,
+            onError = colorScheme.statusNegative
         )
     }
 }
