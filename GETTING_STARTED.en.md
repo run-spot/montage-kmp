@@ -64,7 +64,7 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
-    implementation("run.thespot.montage:montage-kmp:0.0.6")
+    implementation("run.thespot.montage:montage-kmp:0.0.7")
 }
 ```
 
