@@ -16,8 +16,16 @@ fun DesignSystemTheme(
     content: @Composable () -> Unit
 ) {
     val activeTheme = if (isDarkTheme) darkAppTheme else appTheme
+    val pretendardFontFamily = rememberPretendardFontFamily()
+    val pretendardBoldFontFamily = rememberPretendardBoldFontFamily()
+    val typography = rememberPretendardTypography(pretendardFontFamily)
     CompositionLocalProvider(
-        LocalWantedTypography.provides(WantedTypography()),
+        LocalWantedTypography.provides(
+            WantedTypography(
+                defaultFontFamily = pretendardFontFamily,
+                boldFontFamily = pretendardBoldFontFamily
+            )
+        ),
         LocalWantedColorScheme provides activeTheme,
         LocalWantedColorOpacityScheme provides AppWantedColorOpacityScheme
     ) {
@@ -26,7 +34,7 @@ fun DesignSystemTheme(
                 colorScheme = activeTheme,
                 isDarkTheme = isDarkTheme
             ),
-            typography = pretendardTypography,
+            typography = typography,
             shapes = OneIdShapes,
             content = content
         )
