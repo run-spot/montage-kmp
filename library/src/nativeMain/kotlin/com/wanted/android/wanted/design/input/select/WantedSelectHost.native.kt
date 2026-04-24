@@ -2,6 +2,8 @@ package com.wanted.android.wanted.design.input.select
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.wanted.android.wanted.design.input.select.view.WantedMultiSelectBottomSheet
+import com.wanted.android.wanted.design.input.select.view.WantedSelectBottomSheet
 import com.wanted.android.wanted.design.presentation.modal.WantedModalContract
 
 @Composable
@@ -16,7 +18,17 @@ internal actual fun WantedSelectBottomSheetHost(
     onSelect: (item: WantedSelectData) -> Unit,
     onDismissRequest: () -> Unit
 ) {
-    // Native targets do not yet have a dedicated Wanted bottom-sheet host.
+    WantedSelectBottomSheet(
+        modifier = modifier,
+        isShow = isShow,
+        items = items,
+        confirmText = confirmText,
+        selectType = selectType,
+        bottomSheetType = bottomSheetType,
+        selectedItem = selectedItem,
+        onSelect = onSelect,
+        onDismissRequest = onDismissRequest
+    )
 }
 
 @Composable
@@ -31,5 +43,15 @@ internal actual fun WantedMultiSelectBottomSheetHost(
     onSelect: (itemList: List<WantedSelectData>) -> Unit,
     onDismissRequest: () -> Unit
 ) {
-    // Native targets do not yet have a dedicated Wanted bottom-sheet host.
+    WantedMultiSelectBottomSheet(
+        modifier = modifier,
+        isShow = isShow,
+        items = items,
+        confirmText = confirmText,
+        selectType = selectType,
+        dialogType = dialogType,
+        selectedItemList = selectedItemList,
+        onSelect = onSelect,
+        onDismissRequest = onDismissRequest
+    )
 }
