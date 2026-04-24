@@ -54,16 +54,16 @@ import com.wanted.android.wanted.design.theme.DesignSystemTheme
  * @param content (@Composable () -> Unit): 본문 콘텐츠 슬롯입니다.
  */
 @Composable
-fun WantedModalBottomSheet(
+actual fun WantedModalBottomSheet(
     isShow: Boolean,
     onDismissRequest: () -> Unit,
-    modifier: Modifier = Modifier,
-    background: Color = DesignSystemTheme.colors.backgroundElevatedNormal,
-    type: ModalType = ModalType.Flexible,
-    modalSize: ModalSize = ModalSize.Medium,
-    dismissOnClickOutside: Boolean = true,
-    topBar: @Composable (() -> Unit)? = null,
-    bottomBar: (@Composable () -> Unit)? = null,
+    modifier: Modifier,
+    background: Color,
+    type: ModalType,
+    modalSize: ModalSize,
+    dismissOnClickOutside: Boolean,
+    topBar: @Composable (() -> Unit)?,
+    bottomBar: (@Composable () -> Unit)?,
     content: @Composable () -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(
