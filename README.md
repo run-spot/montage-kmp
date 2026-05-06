@@ -1,6 +1,6 @@
 # Montage
 
-Wanted Lab Design System for Android
+Wanted Lab Design System for Compose Multiplatform
 
 [English](GETTING_STARTED.en.md) | [한국어](GETTING_STARTED.kr.md)
 
